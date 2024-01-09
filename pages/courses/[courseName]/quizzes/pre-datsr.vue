@@ -102,13 +102,10 @@ function getOptions(questionId) {
 }
 
 async function handleSubmit(autoSubmit = false) {
-    
   const numQuestionsAnswered = Object.values(selectedOptions.value).filter(
     (v) => v !== null && v !== undefined && v !== ""
   ).length;
-  if (
-    numQuestionsAnswered < quiz.survey_questions.length
-  ) {
+  if (numQuestionsAnswered < quiz.survey_questions.length) {
     alert(
       `Please answer all ${quiz.survey_questions.length} questions before submitting.`
     );
@@ -118,7 +115,6 @@ async function handleSubmit(autoSubmit = false) {
     acc[answer.survey_quizzes_question_id] = answer.survey_quizzes_options_id;
     return acc;
   }, {});
-
 
   for (const [question, answer] of Object.entries(selectedOptions.value)) {
     //Check if empty answer and break and alert to answer all questions
@@ -158,27 +154,34 @@ function handleBeforeUnload(event) {
   event.returnValue =
     "Leaving will submit your quiz. Are you sure you want to leave?";
 }
-
 </script>
 
 <template>
-    <div v-if="submittedQuiz" class="quiz-fullpage bg-emerald-700 min-h-screen w-full flex flex-col justify-center items-center">
-    <h1 class="text-white text-2xl text-center px-6 py-4">DAT:SR Pre-Test Quiz Submitted</h1>
+  <div
+    v-if="submittedQuiz"
+    class="quiz-fullpage bg-emerald-700 min-h-screen w-full flex flex-col justify-center items-center"
+  >
+    <h1 class="text-white text-2xl text-center px-6 py-4">
+      DAT:SR Pre-Test Quiz Submitted
+    </h1>
     <!--- Can edit here to display the score if needed -->
-    <NuxtLink :to="`/${basePath}`" class="bg-emerald-500 w-auto px-6 py-4 text-white text-2xl text-center rounded">
+    <NuxtLink
+      :to="`/${basePath}`"
+      class="bg-emerald-500 w-auto px-6 py-4 text-white text-2xl text-center rounded"
+    >
       Return to All Quizzes
     </NuxtLink>
-</div>
-  <div v-else class="quiz-fullpage">
+  </div>
+  <div v-else class="quiz-fullpage bg-emerald-600">
     <form id="quiz-form">
-      <div class="title ">{{ quiz.quizTitle }}</div>
+      <div class="title text-white">{{ quiz.quizTitle }}</div>
       <div
         v-for="(question, index) in quiz.survey_questions"
         :key="index"
         class="question bg-emerald-500 border-gray-500 border rounded-lg m-2 p-2 w-1/2"
         :id="question.id"
       >
-      <p class="text-white text-2xl"> Question  {{ index + 1 }} </p>
+        <p class="text-white text-2xl">Question {{ index + 1 }}</p>
         <div class="image-container m-2" v-if="getImageUrl(question.id)">
           <img class="question-image" :src="getImageUrl(question.id)" />
         </div>

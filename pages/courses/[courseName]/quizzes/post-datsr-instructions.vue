@@ -53,7 +53,7 @@ function updateButton2() {
 
     <div class="text-center max-w-4xl mx-auto text-white">
       <div class="flex flex-col items-center justify-center p-5">
-        <h2 class="font-3xl font-bold text-black">DAT:SR - Instructions</h2>
+        <h2 class="font-3xl font-bold text-white">DAT:SR - Instructions</h2>
         <p style="font-weight: bold">
           Please read the following instructions before taking the following
           quiz
