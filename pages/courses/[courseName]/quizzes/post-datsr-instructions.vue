@@ -40,6 +40,8 @@ function updateButton2() {
   showAnswer2.value = !showAnswer2.value;
   buttonState2.value = showAnswer2.value ? "Hide" : "Show";
 }
+
+
 </script>
 
 <template>
@@ -128,8 +130,8 @@ function updateButton2() {
       </p>
       <NuxtLink
       class="m-2 bg-emerald-500 rounded-lg p-2 text-white text-center"
-        :to="'/courses/' + courseStore.courseName + '/quizzes/' + ['pre-datsr']"
-        >Begin DAT:SR Pre-Test</NuxtLink
+        :to="'/courses/' + courseStore.courseName + '/quizzes/' + ['post-datsr']"
+        >Begin DAT:SR Post-Test</NuxtLink
       >
     </div>
   </div>
