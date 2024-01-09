@@ -1,0 +1,722 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+.body {
+  background-color: #000;
+}
+.module-link {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  columns: unset;
+  justify-content: flex-end;
+}
+
+
+nav .a {
+  display: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"] {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  padding: 8px 16px;
+  border-radius: 5px;
+  background-color: #24b47e;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+h1 {
+  font-weight: 200;
+}
+
+h2 {
+  margin-bottom: 0.05px;
+}
+
+.container-course {
+  display: grid;
+  grid-template-columns: 15% 85%;
+}
+
+.course-sidebar ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.course-sidebar ul li a {
+  display: block;
+  padding: 1em 1em 1em 1.2em;
+  outline: none;
+  box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2);
+  color: #4fb968;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  -webkit-transition: background 0.3s, box-shadow 0.3s;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.course-sidebar ul li a:hover {
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 -1px rgba(0, 0, 0, 0);
+  color: #fff;
+}
+
+.course-sidebar-header {
+  text-align: center;
+}
+
+.course-sidebar p {
+  margin: 0;
+  padding: 1em;
+  color: rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  font-weight: 300;
+  font-size: 1.2em;
+}
+
+.course-sidebar h3 {
+  margin: 0;
+  padding: 1em;
+  color: rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  font-weight: 300;
+  font-size: 1.2em;
+}
+
+.column {
+  padding: 10px;
+  background-color: #fdfdfd;
+}
+
+.column-left {
+  grid-column: 1;
+}
+
+.column-right {
+  grid-column: 2;
+}
+
+/* Apply to full nav side-bar */
+.sidebar-container {
+  position: block;
+}
+
+.ul .li {
+  background-color: #24b47e;
+}
+
+/*  These are styles for each of the individual quiz questions, given for each quiz.*/
+
+.quiz-fullpage .title {
+  font-size: 24px;
+  background-color: #24b47e;
+  color: white;
+  padding: 10px;
+}
+
+.question {
+  box-shadow: 0px 0.1em 0.2em #5dd0a6; /* Add shadow to the quiz container */
+  padding: 1em;
+  border-radius: 1em; /* Add rounded corners to the quiz container */
+  max-width: 100%; /* Control the width of the quiz container */
+  margin: 1em; /* Center the quiz container */
+
+}
+
+.image-container {
+  display: flex;
+  justify-content: left;
+  pointer-events: none;
+}
+
+.question-image {
+  width: 60%;
+  height: 60%;
+  pointer-events: none;
+}
+
+.question-number {
+  font-size: larger;
+  margin-bottom: .2em;
+  font-weight: bold;
+  text-decoration: underline;
+  
+}
+
+.option-label:hover {
+  background-color: #276749; /* Darker green on hover */
+}
+/* this is throwing a caution for align-items: start; */
+
+
+.subchoice-question-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.subchoice-question-row .image-container {
+  width: 95%;
+  height: 95%;
+  object-fit: cover;
+}
+
+.subchoice-question-row .question-image {
+  display: flex;
+}
+
+.multiple-subchoice-question-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.multiple-subchoice-question-row .question-image {
+  width: 100%;
+  height: 100%;
+}
+
+.module-container {
+  font-size: 18px;
+  line-height: 1.2; /* line-height closer to Word default */
+  padding: 2em;
+}
+
+.module-container h3 {
+  color: white;
+  font-style: bold;
+  margin-bottom: 5px;
+  font-size: larger;
+  font-weight: bold;
+}
+/* Modules layouts */
+.module-container h1,
+.module-container p {
+  /* Add paragraph selector if needed */
+  margin: 0; /* Remove margins */
+  color:white;
+  padding: 0.5em;
+}
+
+.module-container h4 {
+  margin-top: 5px;
+  margin-bottom: 0px;
+  color:white;
+  text-decoration: underline;
+  font-weight: bold;
+  padding-bottom: 0.4em;
+}
+
+.module-container p {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  color:white;
+}
+
+.module-container ol li {
+  margin-left: 15px;
+  color:white;
+}
+
+.module-container ol li a {
+  color:lightblue;
+}
+
+.module-container ol a {
+  margin-left: 25px;
+  text-decoration: underline;
+}
+
+.module-container ul,
+.module-container ol {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color:white;
+}
+
+.module-container ul li {
+  margin-top: 0px;
+  margin-left: 50px;
+  margin-bottom: 0px;
+}
+.module-container ul ul {
+  padding-left: 20px;
+}
+
+.module-container li {
+  margin: 0; /* Remove margins */
+  padding-left: 0; /* Remove padding */
+}
+
+.module-container li button {
+  float: right; /* Shift buttons to the right */
+}
+
+.module-container a {
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0; /* Remove space between links */
+}
+
+.module-container a:hover {
+  color: #a66326;
+}
+
+
+/* Stylings for modules list */
+.module-list ul {
+  list-style: none;
+  margin-left: 40px;
+}
+
+.module-list ul li {
+  box-shadow: inset;
+  width: 50%;
+}
+
+.module-box {
+  position: relative;
+  background-color: rgba(194, 185, 196, 0.706);
+  border-radius: 0.5em;
+  width: 65%;
+  overflow: hidden;
+}
+
+.module-box:hover {
+  transform: scale(1.01); /* Enlarge on hover */
+  transition: transform 0.3s ease-in-out; /* Add smooth transition */
+}
+
+.module-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #24b47e;
+  border-top-left-radius: 0.2em;
+  border-top-right-radius: 0.2em;
+  border: 0.2em;
+  font-size: larger;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.module-description {
+  margin-top: 1em;
+  padding-top: 2em;
+}
+
+/* Stylings for quizzes list */
+.quiz-list ul {
+  list-style: none;
+  margin-left: 40px;
+}
+
+.quiz-list ul li {
+  box-shadow: inset;
+  width: 50%;
+}
+
+.quiz-box {
+  position: relative;
+  background-color: rgba(194, 185, 196, 0.706);
+  border-radius: 0.5em;
+  width: 65%;
+  overflow: hidden;
+}
+
+.quiz-box:hover {
+  transform: scale(1.01); /* Enlarge on hover */
+  transition: transform 0.3s ease-in-out; /* Add smooth transition */
+}
+
+.quiz-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #24b47e;
+  border-top-left-radius: 0.2em;
+  border-top-right-radius: 0.2em;
+  border: 0.2em;
+  font-size: larger;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.quiz-description {
+  margin-top: 2em;
+  padding-top: 2em;
+}
+
+.quiz-attempts {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #24b47e;
+  color: white;
+  padding: 5px 10px; /* Adjust padding as needed */
+  border-bottom-right-radius: 10px;
+  box-sizing: border-box;
+}
+
+/*Styles for front page of dashboard */
+.course-thumbnail {
+  position: relative;
+  width: 150px; /* Adjust thumbnail width as needed */
+  height: 100px; /* Adjust thumbnail height as needed */
+  margin: 10px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+
+/* Login container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.login-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 300px;
+  text-align: center;
+}
+
+.logo {
+  width: 100px; /* Set your logo dimensions */
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto 20px; /* Center the logo */
+}
+
+.login-form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #24b47e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1a8d5a;
+}
+
+.add-course-thumbnail-preview {
+  width: 50px;
+}
+
+.thumbnail-preview {
+  width: 100%; /* Use width instead of max-width */
+  max-width: 400px; /* Set a maximum width to maintain control */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  margin: 0 auto;
+}
+
+/* Dashboard CSS Code to generate thumbnails */
+.dashboard-thumbnail-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.dashboard-thumbnail-row {
+  flex: 0 0 calc(33.33% - 20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-thumbnail {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  width: 20em; /* Set a fixed width for each thumbnail */
+  height: 10em; /* Set a fixed height for each thumbnail */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-thumbnail:hover {
+  transform: scale(1.05);
+}
+.dashboard-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2em;
+}
+
+.dashboard-course-name {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: white;
+}
+
+.add-course-button-container {
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-course-button {
+  display: block;
+  width: 20%;
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #3490dc;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+
+}
+
+.add-course-button:hover {
+  background-color: #2779bd;
+}
+
+/* Register account css styling */
+.register-div {
+  width: 100%;
+  align-items: center;
+}
+
+.psvt-instructions-button {
+  background-color: lightblue;
+  color: #000;
+  font-weight: bolder;
+  width: 20%;
+}
+
+.psvt-instructions-answer {
+  opacity: 0; /* Set initial opacity to 0 (hidden) */
+  transition: opacity 1.5s; /* Smooth transition of opacity */
+  margin-top: 1em;
+  margin-left: 2em;
+  margin-right: 2em;
+  text-align: justify; /* Justify text alignment */
+}
+
+.psvt-instructions-answer.show {
+  opacity: 1; /* Set opacity to 1 (visible) when the 'show' class is added */
+}
+
+/* Used inside of the survey_quizzes so that the timer can be provided to students */
+
+.floating-timer {
+  position: fixed;
+  top: 5em;
+  right: 50px;
+  padding: 10px;
+  background-color: #999999;
+  border: 1px solid #666666;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+}
+
+.floating-timer span {
+  margin-left: 5px;
+}
+
+.survey-quiz-submit {
+  width: 50%;
+}
+
+
+/* Register new user form */
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 95vh;
+  background-color: #f2f2f2;
+  overflow: hidden;
+}
+
+.register-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 50em;
+  text-align: center;
+}
+
+.logo {
+  width: 100px; /* Set your logo dimensions */
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto 20px; /* Center the logo */
+}
+
+.login-form {
+  margin-top: 20px;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.quiz-score-results {
+  margin-top: 10px;
+  text-align: center;
+  display:block;
+  font-weight: bold;
+  font-size: larger;
+}
+
+
+/* Quiz answers correct/incorrect stylings */
+
+.correct-answer-text {
+  color: green;
+}
+.incorrect-answer-text {
+  color: red;
+}
+.correct-option {
+  border-color: green;
+}
+.incorrect-option {
+  border-color: red;
+}
+
+.grading-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.table-container {
+  overflow-x: auto; /* Horizontal Scroll */
+  overflow-y: auto; /* Vertical Scroll */
+  max-height: 500px; /* Set to a height that you find appropriate */
+}
+
+.table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid black;
+  text-align: center;
+  padding: 8px;
+}
+
+.table-container input[type="text"] {
+  width: 100%; /* Take up all available horizontal space */
+  box-sizing: border-box; /* Include padding and border in width */
+  margin: 0; /* Remove any default margin */
+  padding: 4px; /* Add some padding inside the input box */
+}
+
+th, td {
+  /* ...existing styles */
+  padding: 8px 12px; /* Adjust padding as needed */
+}
+
+
+/* Style for admin dashboard button */
+.admin-button {
+  width: 25%;
+  
+}
