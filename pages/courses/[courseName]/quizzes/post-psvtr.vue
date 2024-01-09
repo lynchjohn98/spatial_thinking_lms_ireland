@@ -24,11 +24,7 @@ const quizStore = useQuizStore();
 const courseStore = useCourseStore();
 const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
-
-
 onMounted(async () => {
-  window.addEventListener("beforeunload", handleBeforeUnload);
-
   const { data: gradeData, error: gradeError } = await client
     .from("grades")
     .select("*")
@@ -82,24 +78,6 @@ onMounted(async () => {
   } else {
     console.log("No enrollment data found for this user.");
   }
-
-  const { data, error } = await client
-    .from("grades")
-    .select("*")
-    .eq("survey_quiz_id", 6)
-    .eq("student_id", user.value.id);
-  if (error) {
-    console.log("Error fetching data from gradebook", error);
-  } else if (data.length > 0) {
-    console.log("Record found, attempt submitted", data);
-    submittedQuiz.value = true;
-  } else {
-    console.log("Record not submitted, can start quiz");
-    const quizForm = document.getElementById("quiz-form");
-    quizForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-    });
-  }
 });
 
 function getImageUrl(questionId) {
@@ -151,7 +129,7 @@ async function handleSubmit(autoSubmit = false) {
 
   const payload = {
     student_id: user.value.id,
-    survey_quiz_id: 1,
+    survey_quiz_id: 6,
     score: quizScore.value,
     class_id: courseStore.getCourseId,
     answers: selectedOptions.value,
@@ -186,7 +164,7 @@ function handleBeforeUnload(event) {
 
 <template>
   <div v-if="submittedQuiz" class="bg-emerald-700 w-full h-full flex flex-col justify-center">
-    <h1 class="text-white text-2xl p-40 text-center">PSVT:R Pre-Test Quiz Submitted</h1>
+    <h1 class="text-white text-2xl p-40 text-center">PSVT:R Post-Test Quiz Submitted</h1>
     <!--- Can edit here to display the score if needed -->
     <NuxtLink :to="`/${basePath}`" class="space-x-2 bg-emerald-500 w-full p-10 text-white text-2xl text-center">
      

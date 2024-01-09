@@ -68,7 +68,6 @@ onMounted(async () => {
   } else {
     console.log("No enrollment data found for this user.");
   }
-
   const { data, error } = await client
     .from("grades")
     .select("*")

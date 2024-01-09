@@ -134,7 +134,7 @@ async function handleSubmit(autoSubmit = false) {
   }
   const payload = {
     student_id: user.value.id,
-    survey_quiz_id: 7,
+    survey_quiz_id: 2,
     score: quizScore.value,
     class_id: courseStore.getCourseId,
     answers: selectedOptions.value,

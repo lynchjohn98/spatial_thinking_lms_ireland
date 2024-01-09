@@ -55,7 +55,7 @@ onMounted(async () => {
                   {{ quiz.title }}
                 </div>
                 <div class="quiz-description text-white pl-2">
-                  Attempts Remaining: {{ quiz.remainingAttempts }}
+                 
                 </div>
               </div>
             </NuxtLink>

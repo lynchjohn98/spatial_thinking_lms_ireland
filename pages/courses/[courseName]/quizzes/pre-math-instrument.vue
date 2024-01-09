@@ -69,23 +69,21 @@ async function handleSubmit() {
     finalJson[`question${index + 1}`] = item.value;
   });
   const finalJsonObject = JSON.stringify(finalJson);
-
-  //Send data to backend
-  // const { data, error } = await client.from("grades").insert([
-  //   {
-  //     student_id: user.value.id,
-  //     survey_quiz_id: 8,
-  //     score: quizScore,
-  //     class_id: courseStore.getCourseId,
-  //     answers: finalJsonObject,
-  //     attempt_count: 1,
-  //   },
-  // ]);
-  // if (error) {
-  //   console.log("Error in submission", error);
-  // } else {
-  //   console.log("Submission successful");
-  // }
+  const { data, error } = await client.from("grades").insert([
+    {
+      student_id: user.value.id,
+      survey_quiz_id: 3,
+      score: quizScore,
+      class_id: courseStore.getCourseId,
+      answers: finalJsonObject,
+      attempt_count: 1,
+    },
+  ]);
+  if (error) {
+    console.log("Error in submission", error);
+  } else {
+    console.log("Submission successful");
+  }
   submittedQuiz.value = true;
   console.log("Submitted quiz", submittedQuiz.value);
   console.log("Score", quizScore);
