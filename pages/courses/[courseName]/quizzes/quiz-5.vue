@@ -1,9 +1,12 @@
 <script setup>
-import { ref, reactive, onMounted } from "vue";
-import { updateQuizData } from "@/services/generateQuizData.js";
+import { ref, onMounted, reactive } from "vue";
+import { useQuizStore } from "@/stores/quizStore.js";
+import { useCourseStore } from "@/stores/courseStore.js";
+import { useUserStore } from "@/stores/userStore.js";
+import { handleSubmitQuiz } from "@/services/quizFunctions.js";
+import { useRouter } from 'vue-router';
 
 const courseStore = useCourseStore();
-const globalStore = useGlobalStore();
 
 const userScore = ref(0);
 
