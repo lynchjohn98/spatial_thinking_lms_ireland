@@ -48,7 +48,7 @@ onMounted(async () => {
   const { data, error } = await client
     .from("grades")
     .select("*")
-    .eq("survey_quiz_id", 8)
+    .eq("survey_quiz_id", 3)
     .eq("student_id", user.value.id);
   if (error) {
     console.log("Error fetching data from gradebook", error);
