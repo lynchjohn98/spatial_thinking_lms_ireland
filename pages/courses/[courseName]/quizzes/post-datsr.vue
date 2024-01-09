@@ -2,11 +2,9 @@
 import { ref, reactive, onMounted } from "vue";
 import { useCourseStore } from "@/stores/courseStore.js";
 
-
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const courseStore = useCourseStore();
-
 
 const quiz = reactive({
   quizTitle: "",
@@ -22,25 +20,19 @@ const selectedOptions = ref({});
 const submittedQuiz = ref(false);
 
 onMounted(async () => {
-  window.addEventListener("beforeunload", handleBeforeUnload);
-
   const { data: gradeData, error: gradeError } = await client
     .from("grades")
     .select("*")
     .eq("survey_quiz_id", 7)
     .eq("student_id", user.value.id);
-
   if (gradeError) {
     console.error("Error fetching grade data", gradeError);
     return; // Exit if there was an error
   }
-
   if (gradeData.length > 0) {
     submittedQuiz.value = true;
-    return; // Exit if quiz already submitted
+    return;
   }
-
-  // Now fetch quiz data
   const { data: quizData, error: quizError } = await client
     .from("survey_quizzes")
     .select(
@@ -54,22 +46,20 @@ onMounted(async () => {
     )
     .eq("id", 2)
     .single();
-
   if (quizError) {
     console.error("Error fetching quiz data", quizError);
     return;
   }
-
   quiz.quizTitle = quizData.survey_quiz_name;
   quiz.survey_questions = quizData.survey_quizzes_questions;
   quiz.survey_options = quizData.survey_quizzes_options;
   quiz.survey_images = quizData.survey_quizzes_images;
   quiz.survey_answers = quizData.survey_quizzes_correct_answers;
+
   const { data: enrollmentData, error: enrollmentError } = await client
     .from("enrollments")
     .select("class_id")
     .eq("student_id", user.value.id);
-
   if (enrollmentError) {
     console.log("Error in fetching data", enrollmentError);
   } else if (enrollmentData.length > 0) {
@@ -109,29 +99,20 @@ function getOptions(questionId) {
     (option) => option.survey_quiz_question_id === questionId
   );
 }
+
 async function handleSubmit(autoSubmit = false) {
-
-  console.log("In submit function");
-
-
   const numQuestionsAnswered = Object.values(selectedOptions.value).filter(
     (v) => v !== null && v !== undefined && v !== ""
   ).length;
-  if (numQuestionsAnswered < quiz.survey_questions.length && autoSubmit === false) {
+  if (
+    numQuestionsAnswered < quiz.survey_questions.length &&
+    autoSubmit === false
+  ) {
     alert(
       `Please answer all ${quiz.survey_questions.length} questions before submitting.`
     );
     return;
   }
-
-  if (autoSubmit) {
-    quiz.survey_questions.forEach((question) => {
-      if (!selectedOptions.value.hasOwnProperty(question.id)) {
-        selectedOptions.value[question.id] = null;
-      }
-    });
-  }
-
   const correctAnswersObject = quiz.survey_answers.reduce((acc, answer) => {
     acc[answer.survey_quizzes_question_id] = answer.survey_quizzes_options_id;
     return acc;
@@ -142,80 +123,73 @@ async function handleSubmit(autoSubmit = false) {
       quizScore.value += 1;
     }
   }
-  console.log("Before payload", globalVariables.class_id);
   const payload = {
     student_id: user.value.id,
-    survey_quiz_id: 2,
+    survey_quiz_id: 7,
     score: quizScore.value,
-    class_id: globalVariables.class_id,
+    class_id: courseStore.getCourseId,
     answers: selectedOptions.value,
     attempt_count: 1,
   };
-
-  const { data, error } = await client.from("grades").insert([payload]);
-
-  if (error) {
-    console.log("Error in submission", error);
-  }
-
+  console.log("Submitting quiz", payload, quizScore.value);
+//   const { data, error } = await client.from("grades").insert([payload]);
+//   if (error) {
+//     console.log("Error in submission", error);
+//   }
   submittedQuiz.value = true;
 }
 
-// Prompt user if they attempt to leave the page
-// Added onBeforeUnmount lifecycle hook
 onBeforeUnmount(() => {
   window.removeEventListener("beforeunload", handleBeforeUnload);
 });
 
-// Add a new function to handle beforeunload
 function handleBeforeUnload(event) {
-  // your submit logic here...
   event.preventDefault();
   event.returnValue =
     "Leaving will submit your quiz. Are you sure you want to leave?";
 }
 
-//Refresh the main window:
 </script>
 
 <template>
-    <div v-if="submittedQuiz">
-      <h1>DATSR Pre-Test Quiz Submitted</h1>
-      <p>Thank you for submitting the quiz.</p>
-      <!--- Can edit here to display the score if needed -->
-    </div>
-    <div v-else class="quiz-fullpage">
-      <form id="quiz-form">
-        <div class="title">{{ quiz.quizTitle }}</div>
-        <div
-          v-for="(question, index) in quiz.survey_questions"
-          :key="index"
-          class="question"
-          :id="question.id"
-        >
-          <div class="image-container" v-if="getImageUrl(question.id)">
-            <img class="question-image" :src="getImageUrl(question.id)" />
-          </div>
-          <div class="options-container">
-            <div
-              v-for="option in getOptions(question.id)"
-              :key="option.id"
-              class="option"
-            >
-              <label>
-                <input
-                  type="radio"
-                  :name="question.id"
-                  :value="option.id"
-                  v-model="selectedOptions[question.id]"
-                />
-                {{ option.option }}
-              </label>
-            </div>
+  <div v-if="submittedQuiz">
+    <h1>DATSR Pre-Test Quiz Submitted</h1>
+    <p>Thank you for submitting the quiz.</p>
+    <!--- Can edit here to display the score if needed -->
+  </div>
+  <div v-else class="quiz-fullpage">
+    <form id="quiz-form">
+      <div class="title ">{{ quiz.quizTitle }}</div>
+      <div
+        v-for="(question, index) in quiz.survey_questions"
+        :key="index"
+        class="question bg-emerald-500 border-gray-500 border rounded-lg m-2 p-2 w-1/2"
+        :id="question.id"
+      >
+      <p class="text-white text-2xl"> Question  {{ index + 1 }} </p>
+        <div class="image-container m-2" v-if="getImageUrl(question.id)">
+          <img class="question-image" :src="getImageUrl(question.id)" />
+        </div>
+        <div class="options-container">
+          <div
+            v-for="option in getOptions(question.id)"
+            :key="option.id"
+            class="option text-white font-bold"
+          >
+            <label>
+              <input
+                class="m-2 text-white"
+                type="radio"
+                :name="question.id"
+                :value="option.id"
+                v-model="selectedOptions[question.id]"
+              />
+              {{ option.option }}
+            </label>
           </div>
         </div>
-        <button @click="handleSubmit">Submit</button>
-      </form>
-    </div>
-
+      </div>
+      <button @click="handleSubmit">Submit</button>
+    </form>
+  </div>
 </template>
