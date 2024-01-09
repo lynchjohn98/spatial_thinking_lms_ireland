@@ -14,7 +14,7 @@ async function returnToLogIn() {
 }
 
 const isOpen = ref(false);
-sOpen.value = !isOpen.value;
+isOpen.value = !isOpen.value;
 
 </script>
 
