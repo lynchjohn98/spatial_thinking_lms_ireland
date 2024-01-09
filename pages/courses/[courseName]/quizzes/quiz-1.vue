@@ -39,6 +39,7 @@ async function submitQuiz() {
     submittedQuiz.value = true;
     finalScore.value = results.score;
   }
+  //Create payload and push attempts into the backend
 }
 
 onMounted(async () => {

@@ -92,7 +92,7 @@ async function handleSubmit() {
 
 <template>
   <div v-if="submittedQuiz === false" class="quiz-fullpage bg-emerald-700">
-    <div class="title text-white">Math Instrument Post Test</div>
+    <div class="title text-white">Math Instrument Pre Test</div>
     <div
       class="question bg-emerald-600 text-white border-gray-500 border rounded-lg m-2 p-2 w-1/2"
     >
