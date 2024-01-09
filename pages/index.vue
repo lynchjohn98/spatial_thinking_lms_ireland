@@ -116,7 +116,7 @@ onMounted(async () => {
               class="add-course-thumbnail-preview"
             />
             <div class="dashboard-course-name mt-2">
-              {{ course.class_name }} + {{ course.id }}
+              {{ course.class_name }} 
             </div>
           </NuxtLink>
         </div>

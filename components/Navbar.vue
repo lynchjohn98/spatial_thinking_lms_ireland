@@ -1,9 +1,11 @@
 <script setup>
+const client = useSupabaseClient();
 const router = useRouter();
 
 async function logOut() {
+  console.log('Clicked log out')
   client.auth.signOut();
-  router.push("/");
+  router.push("/login");
 }
 
 async function returnToLogIn() {
@@ -36,7 +38,7 @@ function menuToggle() {
         </NuxtLink>
         <button
           class="bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg m-2"
-          v-on:click="logOut"
+          @click="logOut"
         >
           Log Out
         </button>
