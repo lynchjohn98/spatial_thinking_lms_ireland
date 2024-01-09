@@ -2,6 +2,7 @@
 //Need to implement timer here
 
 import { ref, reactive, onMounted } from "vue";
+import { useCourseStore } from "@/stores/courseStore.js";
 
 const quiz = reactive({
   quizTitle: "",

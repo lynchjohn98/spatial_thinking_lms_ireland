@@ -6,14 +6,14 @@ import { quizList } from "../services/quizList";
 export const useUserStore = defineStore("userStore", {
   state: () => {
     return {
-      id: useLocalStorage("id", ""),
-      email: useLocalStorage("email", ""),
-      firstName: useLocalStorage("firstName", ""),
-      lastName: useLocalStorage("lastName", ""),
-      accountType: useLocalStorage("accountType", ""),
-      gender: useLocalStorage("gender", ""),
-      age: useLocalStorage("age", ""),
-      grades: useLocalStorage("grades", []),
+      id: null,
+      email: null,
+      firstName: null,
+      lastName: null,
+      accountType: null,
+      gender: null,
+      age: null,
+      grades: null,
     };
   },
   persist: true,

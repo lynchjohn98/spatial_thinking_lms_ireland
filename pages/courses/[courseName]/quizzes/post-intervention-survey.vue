@@ -183,7 +183,7 @@ onMounted(async () => {
     console.log("Empty data");
   } else {
     console.log("Data", data);
-    surveySubmitted.value = true;
+    //surveySubmitted.value = true;
   }
 });
 
@@ -259,6 +259,7 @@ const submitSurvey = async () => {
     console.error("Please fill in all required fields.");
     alert("Please fill in all fields before submitting the survey.");
   }
+  
 };
 </script>
 

@@ -6,12 +6,9 @@ import { useSettingsStore } from "@/stores/settingsStore.js";
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
-
 const userStore = useUserStore();
 const courseStore = useCourseStore();
 const settingsStore = useSettingsStore();
-
-
 const route = useRoute();
 const course_url = route.params.courseName;
 const [nameValue, course_id] = route.params.courseName.split("__");
@@ -38,6 +35,8 @@ const isModulesFetched = computed(
 );
 
 onMounted(async () => {
+  console.log('Current user store:', userStore.getEmail)
+  console.log('Current user store:', userStore.getFirstName)
   const { data, error } = await client
     .from("classes")
     .select("*")
@@ -62,11 +61,7 @@ onMounted(async () => {
   checkQuizzes();
 
   // Set user data for grades
-
   userStore.retrieveGrades(client);
-  console.log(userStore);
-  console.log(courseStore);
-  console.log(settingsStore);
 });
 
 watch(isModulesFetched, (newVal) => {

@@ -7,12 +7,6 @@ import { useLocalStorage } from '@vueuse/core';
 const userStore = useUserStore();
 const courseStore = useCourseStore();
 
-onMounted(() => {
-  userStore.setFirstName(localStorage.getItem('firstName'));
-  userStore.setLastName(localStorage.getItem('lastName'));
-  userStore.setAccountType(localStorage.getItem('accountType'));
-});
-
 </script>
 
 <template>
@@ -28,6 +22,7 @@ onMounted(() => {
           <p class="text-sm">Logged in as:</p>
           <h3 class="font-bold text-lg">{{ userStore.getFullName }}</h3>
         </div>
+        {{ userStore.getAccountType  }}
       </div>
 
       <!-- Links -->
