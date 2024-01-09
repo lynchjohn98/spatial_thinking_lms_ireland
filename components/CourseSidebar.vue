@@ -20,9 +20,9 @@ const courseStore = useCourseStore();
         <Icon name="clarity:blocks-group-solid" class="mr-4" size="48" />
         <div>
           <p class="text-sm">Logged in as:</p>
-          <h3 class="font-bold text-lg">{{ userStore.getFullName }}</h3>
+         
         </div>
-        {{ userStore.getAccountType  }}
+
       </div>
 
       <!-- Links -->
