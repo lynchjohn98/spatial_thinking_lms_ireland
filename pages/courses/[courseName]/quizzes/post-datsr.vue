@@ -18,6 +18,7 @@ const quizScore = ref(0);
 const classId = ref(0);
 const selectedOptions = ref({});
 const submittedQuiz = ref(false);
+const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 onMounted(async () => {
   const { data: gradeData, error: gradeError } = await client
@@ -101,12 +102,12 @@ function getOptions(questionId) {
 }
 
 async function handleSubmit(autoSubmit = false) {
+    
   const numQuestionsAnswered = Object.values(selectedOptions.value).filter(
     (v) => v !== null && v !== undefined && v !== ""
   ).length;
   if (
-    numQuestionsAnswered < quiz.survey_questions.length &&
-    autoSubmit === false
+    numQuestionsAnswered < quiz.survey_questions.length
   ) {
     alert(
       `Please answer all ${quiz.survey_questions.length} questions before submitting.`
@@ -118,7 +119,15 @@ async function handleSubmit(autoSubmit = false) {
     return acc;
   }, {});
 
+
   for (const [question, answer] of Object.entries(selectedOptions.value)) {
+    //Check if empty answer and break and alert to answer all questions
+    if (answer === null || answer === undefined || answer === "") {
+      alert(
+        `Please answer all ${quiz.survey_questions.length} questions before submitting.`
+      );
+      return;
+    }
     if (correctAnswersObject[question] === answer) {
       quizScore.value += 1;
     }
@@ -131,11 +140,12 @@ async function handleSubmit(autoSubmit = false) {
     answers: selectedOptions.value,
     attempt_count: 1,
   };
+  console.log(quiz.survey_answers);
   console.log("Submitting quiz", payload, quizScore.value);
-//   const { data, error } = await client.from("grades").insert([payload]);
-//   if (error) {
-//     console.log("Error in submission", error);
-//   }
+  const { data, error } = await client.from("grades").insert([payload]);
+  if (error) {
+    console.log("Error in submission", error);
+  }
   submittedQuiz.value = true;
 }
 
@@ -152,10 +162,13 @@ function handleBeforeUnload(event) {
 </script>
 
 <template>
-  <div v-if="submittedQuiz">
-    <h1>DATSR Pre-Test Quiz Submitted</h1>
-    <p>Thank you for submitting the quiz.</p>
+  <div v-if="submittedQuiz" class="bg-emerald-700 w-full h-full flex flex-col justify-center">
+    <h1 class="text-white text-2xl p-40 text-center">DAT:SR Post-Test Quiz Submitted</h1>
     <!--- Can edit here to display the score if needed -->
+    <NuxtLink :to="`/${basePath}`" class="space-x-2 bg-emerald-500 w-full p-10 text-white text-2xl text-center">
+     
+      Return to All Quizzes
+    </NuxtLink>
   </div>
   <div v-else class="quiz-fullpage">
     <form id="quiz-form">
