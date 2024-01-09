@@ -123,9 +123,7 @@ function updateButton2() {
         :to="
           '/courses/' + courseStore.getCourseName + '/quizzes/' + ['post-psvtr']
         "
-        ><button>
-            Begin PSVT:R Post-Test
-        </button></NuxtLink
+        ><button>Begin PSVT:R Post-Test</button></NuxtLink
       >
     </div>
   </div>

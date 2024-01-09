@@ -1,9 +1,8 @@
 <script setup>
-import { useGlobalStore } from "@/stores/useGlobalStore";
-import { useCourseStore } from "@/stores/useCourseStore";
+import { useCourseStore } from "@/stores/courseStore.js";
 
 const courseStore = useCourseStore();
-const globalStore = useGlobalStore();
+const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 const consent = ref("");
 const sex = ref("");
@@ -15,7 +14,7 @@ const focusGroupParticipantion = ref(null);
 const focusGroupParticipantName = ref("");
 
 const surveySubmitted = ref(false);
-const client = useSupabaseAuthClient();
+const client = useSupabaseClient();
 const user = useSupabaseUser();
 
 const likertAgreementLevels = [
@@ -242,7 +241,7 @@ const submitSurvey = async () => {
       .from("grades")
       .insert([
         {
-          class_id: courseStore.course_id,
+          class_id: courseStore.getCourseId,
           student_id: user.value.id,
           score: 0,
           quiz_id: 13,
@@ -254,6 +253,7 @@ const submitSurvey = async () => {
       console.log("Successful insertion");
     } else {
       console.log("Error", quizError);
+      console.log(courseStore.getCourseId, user.value.id, payload)
     }
   } else {
     console.error("Please fill in all required fields.");
@@ -262,180 +262,178 @@ const submitSurvey = async () => {
 };
 </script>
 
-<template>
-  <CourseSidebar
-    :classType="courseStore.course_type"
-    :courseName="courseStore.course_name"
-    :username="globalStore.username"
-  >
-    <div v-if="surveySubmitted">
-      <h2 class="text-white font-bold text-3xl">
-        Thank you for submitting the survey!
-      </h2>
-    </div>
-    <div v-else class="quiz-fullpage bg-emerald-700 p-6 rounded-lg">
-      <h2 class="font-bold text-2xl mb-4 text-white">
-        Spatial Thinking Post Intervention Survey
-      </h2>
+<template >
+  <div v-if="surveySubmitted" class="">
+    <h2 class="text-black  font-bold text-3xl">
+      Thank you for submitting the post intervention survey!
+    </h2>
+    <NuxtLink :to="`/${basePath}`" class=" bg-emerald-500  text-white text-2xl text-center">
+      <button> Return to All Quizzes</button>
+    </NuxtLink>
+    
+  </div>
+  <div v-else class="quiz-fullpage bg-emerald-700 p-6 rounded-lg">
+    <h2 class="font-bold text-2xl mb-4 text-white">
+      Spatial Thinking Post Intervention Survey
+    </h2>
 
-      <!-- Consent Question -->
+    <!-- Consent Question -->
+    <div class="mb-4">
+      <p class="mb-2 text-white font-semibold">
+        1. I have read the information sheet and consent to take part in the
+        study.
+      </p>
+      <div class="flex gap-4 text-white">
+        <label class="flex items-center">
+          <input
+            type="radio"
+            name="consent"
+            value="yes"
+            v-model="consent"
+            class="mr-2"
+          />
+          Yes
+        </label>
+      </div>
+    </div>
+
+    <!-- Sex Question -->
+    <div class="mb-4">
+      <p class="mb-2 text-white font-semibold">2. Sex:</p>
+      <div class="flex gap-4 text-white">
+        <label class="flex items-center">
+          <input
+            type="radio"
+            name="sex"
+            value="male"
+            v-model="sex"
+            class="mr-2"
+          />
+          Male
+        </label>
+        <label class="flex items-center">
+          <input
+            type="radio"
+            name="sex"
+            value="female"
+            v-model="sex"
+            class="mr-2"
+          />
+          Female
+        </label>
+        <label class="flex items-center">
+          <input
+            type="radio"
+            name="sex"
+            value="other"
+            v-model="sex"
+            class="mr-2"
+          />
+          Other
+        </label>
+        <input
+          v-if="sex === 'other'"
+          type="text"
+          v-model="otherSex"
+          class="border p-2 rounded text-black"
+          placeholder="Please specify"
+        />
+      </div>
+    </div>
+
+    <!-- Age Question -->
+    <div class="mb-4">
+      <p class="mb-2 text-white font-semibold">3. Age:</p>
+      <input
+        type="number"
+        onkeydown="return event.keyCode !== 69"
+        name="age"
+        v-model="age"
+        class="border p-2 rounded"
+        placeholder="Enter your age"
+      />
+    </div>
+
+    <!-- School Name Question -->
+    <div class="mb-4">
+      <p class="mb-2 text-white font-semibold">4. School Name:</p>
+      <input
+        type="text"
+        name="school_name"
+        v-model="schoolName"
+        class="border p-2 rounded"
+        placeholder="Enter your school name"
+      />
+    </div>
+
+    <!-- Likert Scale Questions -->
+    <!-- Template for questions 5 to 22 -->
+    <div v-for="question in likertQuestions" :key="question.question_id">
       <div class="mb-4">
         <p class="mb-2 text-white font-semibold">
-          1. I have read the information sheet and consent to take part in the
-          study.
+          {{ question.question_id }}. {{ question.text }}
         </p>
-        <div class="flex gap-4 text-white">
-          <label class="flex items-center">
-            <input
-              type="radio"
-              name="consent"
-              value="yes"
-              v-model="consent"
-              class="mr-2"
-            />
-            Yes
-          </label>
-        </div>
-      </div>
-
-      <!-- Sex Question -->
-      <div class="mb-4">
-        <p class="mb-2 text-white font-semibold">2. Sex:</p>
-        <div class="flex gap-4 text-white">
-          <label class="flex items-center">
-            <input
-              type="radio"
-              name="sex"
-              value="male"
-              v-model="sex"
-              class="mr-2"
-            />
-            Male
-          </label>
-          <label class="flex items-center">
-            <input
-              type="radio"
-              name="sex"
-              value="female"
-              v-model="sex"
-              class="mr-2"
-            />
-            Female
-          </label>
-          <label class="flex items-center">
-            <input
-              type="radio"
-              name="sex"
-              value="other"
-              v-model="sex"
-              class="mr-2"
-            />
-            Other
-          </label>
-          <input
-            v-if="sex === 'other'"
-            type="text"
-            v-model="otherSex"
-            class="border p-2 rounded text-black"
-            placeholder="Please specify"
-          />
-        </div>
-      </div>
-
-      <!-- Age Question -->
-      <div class="mb-4">
-        <p class="mb-2 text-white font-semibold">3. Age:</p>
-        <input
-          type="number"
-          onkeydown="return event.keyCode !== 69"
-          name="age"
-          v-model="age"
-          class="border p-2 rounded"
-          placeholder="Enter your age"
-        />
-      </div>
-
-      <!-- School Name Question -->
-      <div class="mb-4">
-        <p class="mb-2 text-white font-semibold">4. School Name:</p>
-        <input
-          type="text"
-          name="school_name"
-          v-model="schoolName"
-          class="border p-2 rounded"
-          placeholder="Enter your school name"
-        />
-      </div>
-
-      <!-- Likert Scale Questions -->
-      <!-- Template for questions 5 to 22 -->
-      <div v-for="question in likertQuestions" :key="question.question_id">
-        <div class="mb-4">
-          <p class="mb-2 text-white font-semibold">
-            {{ question.question_id }}. {{ question.text }}
-          </p>
-          <div class="flex gap-4">
-            <div v-for="option in question.options" :key="option">
-              <label class="flex items-center space-x-2 text-white font-light">
-                <input
-                  type="radio"
-                  :name="`question_${question.question_id}`"
-                  :id="`question_${question.question_id}_${option}`"
-                  :value="option"
-                  v-model="question.response"
-                  class="form-radio h-4 w-4 text-emerald-600"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+        <div class="flex gap-4">
+          <div v-for="option in question.options" :key="option">
+            <label class="flex items-center space-x-2 text-white font-light">
+              <input
+                type="radio"
+                :name="`question_${question.question_id}`"
+                :id="`question_${question.question_id}_${option}`"
+                :value="option"
+                v-model="question.response"
+                class="form-radio h-4 w-4 text-emerald-600"
+              />
+              <span>{{ option }}</span>
+            </label>
           </div>
         </div>
       </div>
-
-      <!-- Text Questions -->
-      <!-- Question 31 -->
-      <div class="mb-4">
-        <p class="mb-2 text-white font-bold">26. Any other comments?</p>
-        <textarea
-          v-model="additionalComments"
-          class="border p-2 rounded w-full"
-          placeholder="Type your comments here"
-        ></textarea>
-      </div>
-
-      <!--- Focus Group Question -->
-      <div class="mb-4">
-        <p class="mb-2 text-white font-semibold">
-          Please indicate whether or not you would like to take part in a focus
-          group to discuss your experiences throughout the spatial thinking
-          course.
-        </p>
-        <select
-          v-model="focusGroupParticipantion"
-          class="border p-2 rounded mb-2 text-gray-500"
-        >
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-
-        <div v-if="focusGroupParticipantion === 'yes'">
-          <input
-            type="text"
-            v-model="focusGroupParticipantName"
-            class="border p-2 rounded"
-            placeholder="Enter your name"
-          />
-        </div>
-      </div>
-      <!-- Submit Button -->
-      <button
-        class="bg-emerald-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300"
-        @click="submitSurvey"
-      >
-        Submit Survey
-      </button>
     </div>
-  </CourseSidebar>
+
+    <!-- Text Questions -->
+    <!-- Question 31 -->
+    <div class="mb-4">
+      <p class="mb-2 text-white font-bold">26. Any other comments?</p>
+      <textarea
+        v-model="additionalComments"
+        class="border p-2 rounded w-full"
+        placeholder="Type your comments here"
+      ></textarea>
+    </div>
+
+    <!--- Focus Group Question -->
+    <div class="mb-4">
+      <p class="mb-2 text-white font-semibold">
+        Please indicate whether or not you would like to take part in a focus
+        group to discuss your experiences throughout the spatial thinking
+        course.
+      </p>
+      <select
+        v-model="focusGroupParticipantion"
+        class="border p-2 rounded mb-2 text-gray-500"
+      >
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      <div v-if="focusGroupParticipantion === 'yes'">
+        <input
+          type="text"
+          v-model="focusGroupParticipantName"
+          class="border p-2 rounded"
+          placeholder="Enter your name"
+        />
+      </div>
+    </div>
+    <!-- Submit Button -->
+    <button
+      class="bg-emerald-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300"
+      @click="submitSurvey"
+    >
+      Submit Survey
+    </button>
+  </div>
 </template>
 
 <style></style>

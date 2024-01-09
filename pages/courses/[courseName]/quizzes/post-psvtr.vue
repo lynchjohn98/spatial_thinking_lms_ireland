@@ -185,12 +185,12 @@ function handleBeforeUnload(event) {
 
 <template>
   <div v-if="submittedQuiz" class="bg-emerald-700 w-full h-full flex flex-col justify-center">
-    <h1 class="text-white text-2xl">PSVT:R Pre-Test Quiz Submitted</h1>
+    <h1 class="text-white text-2xl p-40 text-center">PSVT:R Pre-Test Quiz Submitted</h1>
     <!--- Can edit here to display the score if needed -->
-    <button @click="router.push(basePath)">
-      <Icon class="red-icon" icon="bx:bx-home" inline />
+    <NuxtLink :to="`/${basePath}`" class="space-x-2 bg-emerald-500 w-full p-10 text-white text-2xl text-center">
+     
       Return to All Quizzes
-    </button>
+    </NuxtLink>
   </div>
   <div v-else class="quiz-fullpage">
     <form id="quiz-form">

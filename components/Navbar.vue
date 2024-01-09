@@ -1,5 +1,6 @@
 <script setup>
 const client = useSupabaseClient();
+
 const router = useRouter();
 
 async function logOut() {
@@ -13,11 +14,8 @@ async function returnToLogIn() {
 }
 
 const isOpen = ref(false);
+sOpen.value = !isOpen.value;
 
-function menuToggle() {
-  console.log(isOpen);
-  isOpen.value = !isOpen.value;
-}
 </script>
 
 <template>
