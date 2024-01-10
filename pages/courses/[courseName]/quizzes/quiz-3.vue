@@ -11,6 +11,7 @@ const router = useRouter();
 const basePath = router.currentRoute.value.fullPath.replace(/\/quiz-\d+$/, '');
 
 //Get objects
+const user = useSupabaseUser();
 const client = useSupabaseClient();
 const quizStore = useQuizStore();
 const courseStore = useCourseStore();

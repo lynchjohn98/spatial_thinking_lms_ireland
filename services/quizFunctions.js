@@ -5,17 +5,45 @@ export async function handleSubmitQuiz(
 ) {
   let score = 0;
   let answeredQuestions = 0;
+  let questionStatusUpdates = {}; // Temporary storage for question statuses
+
   quizStore.questions.forEach((question) => {
     if (selectedAnswers.hasOwnProperty(question.id)) {
       answeredQuestions++;
-      const selectedOptionId = selectedAnswers[question.id];
-      const correctAnswerOptionId = question.correct_answers[0].option_id;
+      const selectedOptionIds = Array.isArray(selectedAnswers[question.id])
+        ? selectedAnswers[question.id]
+        : [selectedAnswers[question.id]]; // Ensure we always work with an array
+      const correctAnswerOptionIds = question.correct_answers.map(
+        (answer) => answer.option_id
+      );
 
-      if (selectedOptionId === correctAnswerOptionId) {
-        score++;
+      // Check if the question is multiple-choice or multiple-select
+      if (question.question_type === "multiple_choice") {
+        if (correctAnswerOptionIds.includes(selectedOptionIds[0])) {
+          score++;
+          questionStatusUpdates[question.id] = "correct"; // Add correct status
+        } else {
+          questionStatusUpdates[question.id] = "incorrect"; // Add incorrect status
+        }
+      } else if (question.question_type === "multiple_select") {
+        const isCorrect =
+          selectedOptionIds.every((id) =>
+            correctAnswerOptionIds.includes(id)
+          ) && selectedOptionIds.length === correctAnswerOptionIds.length;
+        if (isCorrect) {
+          score++;
+          questionStatusUpdates[question.id] = "correct"; // Add correct status
+        } else {
+          // For multiple-select, we need to check each option individually
+          questionStatusUpdates[question.id] = selectedOptionIds.map((id) => ({
+            optionId: id,
+            isCorrect: correctAnswerOptionIds.includes(id),
+          }));
+        }
       }
     }
   });
+
   const totalQuestions = quizStore.questions.length;
   if (
     answeredQuestions < totalQuestions &&
@@ -33,5 +61,5 @@ export async function handleSubmitQuiz(
     left: 0,
     behavior: "smooth",
   });
-  return { submitted: true, score };
+  return { submitted: true, score, questionStatusUpdates  };
 }

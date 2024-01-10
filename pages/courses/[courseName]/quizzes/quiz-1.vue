@@ -4,13 +4,14 @@ import { useQuizStore } from "@/stores/quizStore.js";
 import { useCourseStore } from "@/stores/courseStore.js";
 import { useUserStore } from "@/stores/userStore.js";
 import { handleSubmitQuiz } from "@/services/quizFunctions.js";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 //Get old url for reference later
 const router = useRouter();
-const basePath = router.currentRoute.value.fullPath.replace(/\/quiz-\d+$/, '');
+const basePath = router.currentRoute.value.fullPath.replace(/\/quiz-\d+$/, "");
 
 //Get objects
+const user = useSupabaseUser();
 const client = useSupabaseClient();
 const quizStore = useQuizStore();
 const courseStore = useCourseStore();
@@ -25,6 +26,9 @@ const submittedQuiz = ref(false);
 const selectedAnswers = reactive({});
 const questionStatus = reactive({});
 
+//Get current student attempts
+const studentAttempts = ref(0);
+
 //Aux methods
 function selectOption(questionId, optionId) {
   selectedAnswers[questionId] = optionId;
@@ -38,11 +42,31 @@ async function submitQuiz() {
   if (results.submitted) {
     submittedQuiz.value = true;
     finalScore.value = results.score;
+    questionStatus.value = results.questionStatusUpdates; // Update question status with details
+
+    console.log(results);
+
+    //Create payload and push attempts into the backend
+    const { data, error } = await client.from("grades").insert([
+      {
+        class_id: courseStore.getCourseId,
+        student_id: user.value.id,
+        quiz_id: 3,
+        score: finalScore.value,
+        attempt_count: attemptPayload,
+      },
+    ]);
+    if (error) {
+      console.log("Error inserting payload", error);
+    } else {
+      console.log("Quiz data inserted successfully", data);
+    }
   }
-  //Create payload and push attempts into the backend
 }
 
 onMounted(async () => {
+  //Check if user is over alloted attempts for the quiz:
+  //here
   await quizStore.fetchQuizData(client, quizId, numberOfQuestions);
   // Computed property to filter only multiple choice questions, change for question types
   const multipleChoiceQuestions = computed(() => {
@@ -52,15 +76,12 @@ onMounted(async () => {
   });
   quizStore.setQuestions(multipleChoiceQuestions.value);
 });
-
 </script>
 
 <template>
   <div class="bg-emerald-600 flex flex-col quiz-fullpage">
     <div class="text-white mb-6">
       <button v-if="!submittedQuiz" @click="submitQuiz">
-        <Icon name="openmoji:return-back-button" class="red-icon" size="38" />
-        <Icon class="red-icon" icon="bx:bx-home" inline />
         Submit Quiz and Return to All Quizzes
       </button>
       <button v-else @click="router.push(basePath)">
@@ -96,38 +117,29 @@ onMounted(async () => {
             class="rounded-lg mb-4 border-4 border-black"
             :src="question.images[0].image_url"
           />
-          <div class="flex flex-col space-y-2">
-            <div
-              v-for="option in question.options"
-              :key="option.id"
-              class="relative"
+          <!-- ... -->
+          <div
+            v-for="option in question.options"
+            :key="option.id"
+            class="relative"
+          >
+            <label
+              :for="`option_${option.id}`"
+              class="flex items-center space-x-2 cursor-pointer"
             >
-              <label
-                :for="`option_${option.id}`"
-                class="flex items-center space-x-2 cursor-pointer"
-              >
-                <input
-                  type="radio"
-                  :id="`option_${option.id}`"
-                  :name="`question_${question.id}`"
-                  :value="option.id"
-                  @change="selectOption(question.id, option.id)"
-                  :disabled="submittedQuiz"
-                  class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:ring-emerald-600"
-                />
-                <span class="text-white text-xl font-medium">{{
-                  option.option_text
-                }}</span>
-              </label>
-            </div>
-            <div v-if="submittedQuiz" class="result-indicator">
-              <span v-if="questionStatus[question.id]" class="correct">
-                <Icon name="openmoji:check-mark" class="red-icon" size="38" />
-              </span>
-              <span v-else class="incorrect">
-                <Icon name="openmoji:cross-mark" class="red-icon" size="38" />
-              </span>
-            </div>
+              <input
+                type="radio"
+                :id="`option_${option.id}`"
+                :name="`question_${question.id}`"
+                :value="option.id"
+                @change="selectOption(question.id, option.id)"
+                :disabled="submittedQuiz"
+                class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:ring-emerald-600"
+              />
+              <span class="text-white text-xl font-medium">{{
+                option.option_text
+              }}</span>
+            </label>
           </div>
         </div>
       </div>

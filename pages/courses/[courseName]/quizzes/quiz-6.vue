@@ -10,7 +10,9 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const basePath = router.currentRoute.value.fullPath.replace(/\/quiz-\d+$/, '');
 
+
 //Get objects
+const user = useSupabaseUser();
 const client = useSupabaseClient();
 const quizStore = useQuizStore();
 const courseStore = useCourseStore();
@@ -236,6 +238,7 @@ async function submitStudentData() {
             forget planes on the diagonal.)
           </h3>
           <img
+        
             class="ml-5 question-image justify-center align-center border-black border-4 rounded-lg"
             src="https://ketcslswwsvlsdcnvgll.supabase.co/storage/v1/object/sign/Module9_Object_Reflections_Symmetry/11_m9.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJNb2R1bGU5X09iamVjdF9SZWZsZWN0aW9uc19TeW1tZXRyeS8xMV9tOS5wbmciLCJpYXQiOjE3MDI2Mzk2NjksImV4cCI6MTczNDE3NTY2OX0.b7r_CcCkQsr0KJsxPV7WgerwrEd_0W4F2V7x2QRpw3I&t=2023-12-15T11%3A27%3A49.411Z"
           />
@@ -322,6 +325,7 @@ async function submitStudentData() {
           </h3>
           <img
             class="ml-5 question-image justify-center align-center border-black border-4 rounded-lg"
+            width="50%"
             src="https://ketcslswwsvlsdcnvgll.supabase.co/storage/v1/object/sign/Module9_Object_Reflections_Symmetry/13_m9.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJNb2R1bGU5X09iamVjdF9SZWZsZWN0aW9uc19TeW1tZXRyeS8xM19tOS5wbmciLCJpYXQiOjE3MDI2Mzk4NTksImV4cCI6MTczNDE3NTg1OX0.Ay9sJSV-2Iivxc-V8rM2G5YP_XWGvTz1D0LTHGwp9DQ&t=2023-12-15T11%3A30%3A59.556Z"
           />
           <div class="options-container p-4 space-y-4 flex flex-col text-white">

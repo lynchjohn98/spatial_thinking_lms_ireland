@@ -5,12 +5,17 @@ import { useCourseStore } from "@/stores/courseStore.js";
 import { useUserStore } from "@/stores/userStore.js";
 import { handleSubmitQuiz } from "@/services/quizFunctions.js";
 import { useRouter } from 'vue-router';
+import { updateQuizData } from '@/services/generateQuizData.js';
 
 const courseStore = useCourseStore();
 
+//Get old url for reference later
+const router = useRouter();
+const basePath = router.currentRoute.value.fullPath.replace(/\/quiz-\d+$/, '');
+
+
 const userScore = ref(0);
 
-const router = useRouter();
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const isLoading = ref(false);
@@ -211,7 +216,7 @@ async function submitStudentData() {
     <div
       v-for="(question, qIndex) in subChoiceQuestions"
       :key="qIndex"
-      class="question subchoice-question"
+      class="question subchoice-question bg-emerald-600"
     >
       <h2 class="font-bold text-white text-3xl flex">
         Question {{ qIndex + 1 }}
@@ -256,6 +261,6 @@ async function submitStudentData() {
       </div>
     </div>
   </div>
-  <button v-if="!allAnswered" @click="submitAnswers">Submit Answers</button>
+  <button v-if="!submittedQuiz" @click="submitAnswers">Submit Answers</button>
   <button v-else @click=router.push(basePath)> Return to Quizzes </button>
 </template>
