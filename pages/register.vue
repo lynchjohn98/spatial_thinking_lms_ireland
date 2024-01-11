@@ -14,7 +14,7 @@ const router = useRouter();
 const password = ref("");
 const confirmPassword = ref("");
 const spatialCode = ref("");
-
+const instructor_code ="ce6e5235-64f5-4d56-99dc-f17ba857c85a"
 const signUpUser = async () => {
   //const instructor_code = useRuntimeConfig().public.teacherCode;
   console.log(spatialCode.value);
