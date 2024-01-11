@@ -12,6 +12,10 @@ const settingsStore = useSettingsStore();
 const moduleTableVisible = ref(true);
 const quizTableVisible = ref(true);
 
+const allStudentData = reactive({
+  students: [],
+});
+
 const toggleModuleTableVisibility = () => {
   moduleTableVisible.value = !moduleTableVisible.value;
   console.log("here now", moduleTableVisible.value);
@@ -25,6 +29,7 @@ const toggleQuizTableVisibility = () => {
 onMounted(async () => {
   await settingsStore.fetchModuleSettings(courseStore.getCourseId, client);
   await settingsStore.fetchQuizSettings(courseStore.getCourseId, client);
+  fetchEnrolledStudents();
 });
 
 //Change class type between control and experimental if they did not create this earlier
@@ -115,6 +120,64 @@ async function downloadExtensionExercises() {
     document.body.removeChild(link);
   }
 }
+
+// Assuming this is your fetch method:
+async function fetchEnrolledStudents() {
+  //Populate student enrollment data:
+  const { data: studentListData, error: studentListError } = await client
+    .from("enrollments")
+    .select(
+      `
+          *,
+          profiles:student_id (id, email, first_name, last_name)
+        `
+    )
+    .eq("class_id", courseStore.getCourseId);
+  if (studentListError) {
+    console.log("Error fetching student data", studentListError);
+  } else {
+    allStudentData.students = studentListData.map((student) => ({
+      ...student,
+      ...student.profiles,
+    }));
+  }
+}
+
+//Student removal of function
+async function removeStudent(
+  studentId,
+  studentFirstName,
+  studentLastName,
+  studentEmail
+) {
+  const confirmed = window.confirm(
+    `Are you sure you want to remove student ${
+      studentFirstName + " " + studentLastName
+    } (email: ${studentEmail}) from the course ${courseStore.course_name}?`
+  );
+  if (!confirmed) {
+    return; // Exit the function if not confirmed
+  }
+
+  const { data, error } = await client
+    .from("enrollments")
+    .delete()
+    .eq("student_id", studentId)
+    .eq("class_id", courseStore.course_id);
+
+  if (error) {
+    console.log("Error removing student", error);
+  } else {
+    console.log("Successfully removed student", data);
+
+    // Remove the student from the local array
+    allStudentData.students = allStudentData.students.filter(
+      (student) => student.id !== studentId
+    );
+  }
+}
+
+
 </script>
 
 <template>
@@ -310,7 +373,41 @@ async function downloadExtensionExercises() {
             </tr>
           </tbody>
         </div>
+
+        <h3 class="text-bold text-white text-2xl m-4 p-4">Enrolled Students:</h3>
+
+      <table class="text-white border-4 border-black">
+        <thead class="border-4 border-black">
+          <th>Student Name:</th>
+          <th>Student Email:</th>
+          <th>Remove Student from Course:</th>
+        </thead>
+        <tbody>
+          <tr v-for="(student, index) in allStudentData.students" :key="index">
+            <td>{{ student.first_name }} {{ student.last_name }}</td>
+            <td>{{ student.email }}</td>
+            <td>
+              <button
+                @click="
+                  removeStudent(
+                    student.id,
+                    student.first_name,
+                    student.last_name,
+                    student.email
+                  )
+                "
+                class="bg-red-400 w-1/2"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+        
       </div>
+      
 
       <div v-else>
         <h1 class="text-2xl text-white font-bold">Access to page Denied</h1>
