@@ -2,11 +2,10 @@
 import { defineProps } from "vue";
 import { useCourseStore } from "@/stores/courseStore.js";
 import { useUserStore } from "@/stores/userStore.js";
-import { useLocalStorage } from '@vueuse/core';
+import { useLocalStorage } from "@vueuse/core";
 
 const userStore = useUserStore();
 const courseStore = useCourseStore();
-
 </script>
 
 <template>
@@ -21,7 +20,7 @@ const courseStore = useCourseStore();
         <div>
           <p class="text-sm">Logged in as:</p>
           <h3 class="font-bold text-lg">{{ userStore.getFullName }}</h3>
-        </div>  
+        </div>
       </div>
 
       <!-- Links -->
@@ -81,6 +80,7 @@ const courseStore = useCourseStore();
             </NuxtLink>
           </li>
 
+          <!--- 
           <li>
             <NuxtLink
               :to="'/account'"
@@ -90,7 +90,7 @@ const courseStore = useCourseStore();
               <p class="mr-4">My Account</p>
             </NuxtLink>
           </li>
-
+-->
           <li>
             <NuxtLink
               :to="'/'"
