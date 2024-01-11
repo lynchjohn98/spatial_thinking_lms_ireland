@@ -64,7 +64,7 @@ async function logOut() {
 
 onMounted(async () => {
   if (user.value === null) {
-    router.push("/login");
+    console.log('This ran')
   } else {
     //Set the id of the user
     userStore.setUserId(user.value.id);

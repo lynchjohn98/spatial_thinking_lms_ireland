@@ -10,7 +10,7 @@ const spatialCode = ref("");
 
 const signUpUser = async () => {
   const instructor_code = useRuntimeConfig().public.teacherCode;
-  const client = useSupabaseAuthClient();
+  const client = useSupabaseClient();
 
   console.log(spatialCode.value);
   let { data, error } = await client.auth.signUp({
