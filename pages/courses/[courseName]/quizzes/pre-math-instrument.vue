@@ -278,14 +278,13 @@ async function handleSubmit() {
       <!-- Part B -->
       <div class="question-section mt-4">
         <h3>
-          Part B: Here are pictures of four tracks: Along which one of these
+          Part B: Here is a picture of four tracks: Along which one of these
           tracks was the car driven to produce the speed graph shown above?
           Select the correct answer.
         </h3>
         <div class="image-container">
           <img
             class="question-image border-black border-2"
-            width="100%"
             src="https://ketcslswwsvlsdcnvgll.supabase.co/storage/v1/object/public/wave4g9_images/wg9_6.png"
           />
         </div>

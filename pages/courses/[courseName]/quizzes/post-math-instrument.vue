@@ -287,7 +287,6 @@ async function handleSubmit() {
         <div class="image-container">
           <img
             class="question-image border-black border-2"
-            width="100%"
             src="https://ketcslswwsvlsdcnvgll.supabase.co/storage/v1/object/public/wave4g9_images/wg9_6.png"
           />
         </div>
