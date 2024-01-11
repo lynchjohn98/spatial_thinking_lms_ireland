@@ -31,7 +31,7 @@ onMounted(async () => {
     return; // Exit if there was an error
   }
   if (gradeData.length > 0) {
-    submittedQuiz.value = true;
+    submittedQuiz.value = false;
     return;
   }
   const { data: quizData, error: quizError } = await client
@@ -182,7 +182,7 @@ function handleBeforeUnload(event) {
       >
         <p class="text-white text-2xl">Question {{ index + 1 }}</p>
         <div class="image-container m-2" v-if="getImageUrl(question.id)">
-          <img class="question-image" :src="getImageUrl(question.id)" />
+          <img class="" :src="getImageUrl(question.id)" />
         </div>
         <div class="options-container">
           <div

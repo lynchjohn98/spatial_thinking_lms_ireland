@@ -25,6 +25,7 @@ const courseStore = useCourseStore();
 const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 onMounted(async () => {
+  console.log('HERE: ', user.value.id);
   const { data: gradeData, error: gradeError } = await client
     .from("grades")
     .select("*")
@@ -40,6 +41,7 @@ onMounted(async () => {
     submittedQuiz.value = true;
     return; // Exit if quiz already submitted
   }
+
 
   // Now fetch quiz data
   const { data: quizData, error: quizError } = await client
