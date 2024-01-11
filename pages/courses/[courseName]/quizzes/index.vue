@@ -13,6 +13,9 @@ const settingsStore = useSettingsStore();
 
 //Combine the quiz visibility and grade data to determine which ones to show
 const quizzesWithStatus = computed(() => {
+  console.log('Here: ', settingsStore.getQuizVisibility);
+  console.log('Grades', userStore.getGrades);
+  //Below is for later if we want to limit the amount of times a user can take a quiz
   return settingsStore.getQuizVisibility.map((quiz) => {
     const grade = userStore.getGrades.find((g) => g.name === quiz.name);
     const remainingAttempts = grade ? quiz.attempts - grade.attemptsTaken : quiz.attempts;
@@ -45,7 +48,7 @@ onMounted(async () => {
       <div class="">
         <ul>
           <!-- Loop through quizzes and render a NuxtLink only if visibility is true -->
-          <li v-for="quiz in quizzesWithStatus" :key="quiz.name" v-show="quiz.visibility">
+          <li v-for="quiz in settingsStore.getQuizVisibility" :key="quiz.name" v-show="quiz.visibility">
             <NuxtLink
               :to="`/courses/${courseStore.getCourseURL}/quizzes/${quiz.name}`"
               :class="{ 'opacity-50': quiz.remainingAttempts === 0 }"
