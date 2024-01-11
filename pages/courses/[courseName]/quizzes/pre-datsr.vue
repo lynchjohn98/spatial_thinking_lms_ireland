@@ -21,20 +21,21 @@ const submittedQuiz = ref(false);
 const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 onMounted(async () => {
-  console.log("This is now running");
-  const { data: gradeData, error: gradeError } = await client
-    .from("grades")
-    .select("*")
-    .eq("survey_quiz_id", 2)
-    .eq("student_id", user.value.id);
-  if (gradeError) {
-    console.error("Error fetching grade data", gradeError);
-    return; // Exit if there was an error
-  }
-  if (gradeData.length > 0) {
-    submittedQuiz.value = false;
-    return;
-  }
+  // console.log("This is now running");
+  // const { data: gradeData, error: gradeError } = await client
+  //   .from("grades")
+  //   .select("*")
+  //   .eq("survey_quiz_id", 2)
+  //   .eq("student_id", user.value.id);
+  // if (gradeError) {
+  //   console.error("Error fetching grade data", gradeError);
+  //   return; // Exit if there was an error
+  // }
+  // if (gradeData.length > 0) {
+  //   submittedQuiz.value = false;
+  //   return;
+  // }
+
   const { data: quizData, error: quizError } = await client
     .from("survey_quizzes")
     .select(
@@ -52,14 +53,13 @@ onMounted(async () => {
     console.error("Error fetching quiz data", quizError);
     return;
   }
-  else{
-    console.log("Quiz data", quizData);
-  }
+
   quiz.quizTitle = quizData.survey_quiz_name;
   quiz.survey_questions = quizData.survey_quizzes_questions;
   quiz.survey_options = quizData.survey_quizzes_options;
   quiz.survey_images = quizData.survey_quizzes_images;
   quiz.survey_answers = quizData.survey_quizzes_correct_answers;
+
 
   const { data: enrollmentData, error: enrollmentError } = await client
     .from("enrollments")
@@ -89,7 +89,10 @@ function getOptions(questionId) {
   );
 }
 
-async function handleSubmit(autoSubmit = false) {
+async function handleSubmit() {
+  console.log('Handling the submission of the quiz')
+  console.log(selectedOptions.value);
+  console.log('HGERE the submission of the quiz')
   const numQuestionsAnswered = Object.values(selectedOptions.value).filter(
     (v) => v !== null && v !== undefined && v !== ""
   ).length;
@@ -99,6 +102,7 @@ async function handleSubmit(autoSubmit = false) {
     );
     return;
   }
+
   const correctAnswersObject = quiz.survey_answers.reduce((acc, answer) => {
     acc[answer.survey_quizzes_question_id] = answer.survey_quizzes_options_id;
     return acc;
@@ -116,6 +120,9 @@ async function handleSubmit(autoSubmit = false) {
       quizScore.value += 1;
     }
   }
+  console.log(numQuestionsAnswered);
+  console.log(quizScore.value)
+  console.log(correctAnswersObject);
   const payload = {
     student_id: user.value.id,
     survey_quiz_id: 2,

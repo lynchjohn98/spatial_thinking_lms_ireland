@@ -120,9 +120,7 @@ function updateButton2() {
         automatically submitted.
       </p>
       <NuxtLink
-        :to="
-          '/courses/' + courseStore.getCourseName + '/quizzes/' + ['post-psvtr']
-        "
+      :to="`/courses/${courseStore.getCourseURL}/quizzes/post-psvtr`"
         ><button>Begin PSVT:R Post-Test</button></NuxtLink
       >
     </div>

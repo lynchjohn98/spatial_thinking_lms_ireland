@@ -101,7 +101,7 @@ function getOptions(questionId) {
   );
 }
 
-async function handleSubmit(autoSubmit = false) {
+async function handleSubmit() {
   const numQuestionsAnswered = Object.values(selectedOptions.value).filter(
     (v) => v !== null && v !== undefined && v !== ""
   ).length;

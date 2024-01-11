@@ -14,6 +14,7 @@ const courseStore = useCourseStore();
 //Get old url for reference later
 const router = useRouter();
 const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
+console.log(basePath);
 
 //Set quiz settings
 const quizId = 3;
@@ -120,9 +121,7 @@ function updateButton2() {
         automatically submitted.
       </p>
       <NuxtLink
-        :to="
-          '/courses/' + courseStore.getCourseName + '/quizzes/' + ['pre-psvtr']
-        "
+        :to="`/courses/${courseStore.getCourseURL}/quizzes/pre-psvtr`"
         ><button>Begin PSVT:R Post-Test</button></NuxtLink
       >
     </div>
