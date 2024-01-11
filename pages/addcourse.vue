@@ -144,7 +144,7 @@ const togglePopup = () => {
         </button>
       </NuxtLink>
     </div>
-  <div v-if="globalStore.userrole === 'instructor'">
+  <div v-if="userStore.getAccountType === 'instructor'">
     <div
       class="min-w-screen min-h-screen flex flex-col items-center justify-center px-5 py-5 bg-gradient-to-b from-emerald-500 to-emerald-900"
     >
@@ -255,69 +255,3 @@ const togglePopup = () => {
     </div>
   </div>
 </template>
-
-<!--
-  <div v-if="globalVariables.userrole === 'instructor'">
-    <div
-      class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5 bg-emerald-800"
-    >
-      <div class="flex item-centers space-x-2">
-        <h1 class="text-2xl font-bold mb-4 text-white">
-          Add New Spatial Thinking Course
-          <NuxtLink @click="togglePopup">
-            <Icon
-              name="streamline:interface-help-question-circle-circle-faq-frame-help-info-mark-more-query-question"
-              class="text-white fill-current main-icon cursor-pointer"
-              size="28"
-            />
-          </NuxtLink>
-        </h1>
-      </div>
-
-      <div
-        v-if="showPopup"
-        class="absolute w-56 p-4 bg-white border rounded shadow-xl"
-      >
-        <p>
-          Create a new spatial thinking course. Please do not add any forward
-          slashes in the course name.<br />Spatial/24 will not work
-        </p>
-        <button
-          @click="togglePopup"
-          class="mt-2 px-3 py-1 bg-red-500 text-white rounded"
-        >
-          Close
-        </button>
-        
-      </div>
-      <div v-if="submitSuccess === false">
-      <h1 class="text-2xl font-semibold mb-4">
-        Add New Spatial Thinking Course
-      </h1>
-      <p>
-        Please do not add any forward slashes in the course name.<br />Spatial/24
-        will not work
-      </p>
-    </div>
-    <h1 v-else class="text-2xl font-semibold mb-4">New Course Created</h1>
-    
-      
-    </div>
-    
-    <div v-if="submitSuccess === true">
-      <p>Please use this code to have registered students' join your course:</p>
-
-      <h3>
-        {{ joinCode }}
-      </h3>
-
-      <NuxtLink
-        to="/dashboard"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        Return to Dashboard
-      </NuxtLink>
-    </div>
-  </div>
-
--->

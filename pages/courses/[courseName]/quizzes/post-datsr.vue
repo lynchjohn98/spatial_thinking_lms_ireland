@@ -21,6 +21,7 @@ const submittedQuiz = ref(false);
 const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 onMounted(async () => {
+  console.log('STARTING TO RUN THIS');
   const { data: gradeData, error: gradeError } = await client
     .from("grades")
     .select("*")

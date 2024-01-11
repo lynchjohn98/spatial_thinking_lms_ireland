@@ -40,11 +40,6 @@ onMounted(async () => {
     return; // Exit if there was an error
   }
 
-  if (gradeData.length > 0) {
-    submittedQuiz.value = true;
-    return; // Exit if quiz already submitted
-  }
-
   // Now fetch quiz data
   const { data: quizData, error: quizError } = await client
     .from("survey_quizzes")
@@ -83,23 +78,7 @@ onMounted(async () => {
     console.log("No enrollment data found for this user.");
   }
 
-  const { data, error } = await client
-    .from("grades")
-    .select("*")
-    .eq("survey_quiz_id", 6)
-    .eq("student_id", user.value.id);
-  if (error) {
-    console.log("Error fetching data from gradebook", error);
-  } else if (data.length > 0) {
-    console.log("Record found, attempt submitted", data);
-    submittedQuiz.value = true;
-  } else {
-    console.log("Record not submitted, can start quiz");
-    const quizForm = document.getElementById("quiz-form");
-    quizForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-    });
-  }
+  
 });
 
 function getImageUrl(questionId) {

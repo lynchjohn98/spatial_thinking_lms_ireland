@@ -508,17 +508,13 @@ async function handleSubmit() {
 
     <button @click="handleSubmit">Submit</button>
   </div>
-  <div v-if="submittedQuiz === true">
-    <h2 class="text-black font-bold text-3xl">
-      Thank you for submitting the mathematics test!
-    </h2>
-    <NuxtLink
-      :to="`/${basePath}`"
-      class="bg-emerald-500 text-white text-2xl text-center"
-    >
-      <button>Return to All Quizzes</button>
+  <div v-if="submittedQuiz" class="quiz-fullpage bg-emerald-700 min-h-screen w-full flex flex-col justify-center items-center">
+    <h1 class="text-white text-2xl text-center px-6 py-4">Pre-Math Instrument Submitted</h1>
+    <!--- Can edit here to display the score if needed -->
+    <NuxtLink :to="`/${basePath}`" class="bg-emerald-500 w-auto px-6 py-4 text-white text-2xl text-center rounded">
+      Return to All Quizzes
     </NuxtLink>
-  </div>
+</div>
 </template>
 
 <style>

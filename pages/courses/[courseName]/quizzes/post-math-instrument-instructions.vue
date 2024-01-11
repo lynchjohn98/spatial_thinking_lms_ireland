@@ -6,7 +6,7 @@ const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 <template>
   <div
-    class="bg-emerald-500 h-screen flex flex-col justify-center items-center px-4"
+    class="bg-emerald-500 h-screen flex flex-col justify-center items-center px-4 text-white"
   >
     <NuxtLink :to="`/${basePath}`" class="space-x-2">
       <div class="font-bold text-2xl m-1 whitespace-pre-line text-white">

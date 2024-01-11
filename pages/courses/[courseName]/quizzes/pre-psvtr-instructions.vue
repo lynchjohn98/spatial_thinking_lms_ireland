@@ -43,7 +43,7 @@ function updateButton2() {
 </script>
 
 <template>
-  <div class="bg-emerald-600 flex flex-col">
+  <div class="bg-emerald-600 flex flex-col text-white">
     <NuxtLink :to="`/${basePath}`" class="space-x-2">
       <div class="font-bold text-2xl m-1 whitespace-pre-line text-white">
         <Icon name="openmoji:return-back-button" class="white-icon" size="48" />

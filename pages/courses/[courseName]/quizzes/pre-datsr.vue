@@ -21,6 +21,7 @@ const submittedQuiz = ref(false);
 const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 onMounted(async () => {
+  console.log("This is now running");
   const { data: gradeData, error: gradeError } = await client
     .from("grades")
     .select("*")
@@ -51,6 +52,9 @@ onMounted(async () => {
     console.error("Error fetching quiz data", quizError);
     return;
   }
+  else{
+    console.log("Quiz data", quizData);
+  }
   quiz.quizTitle = quizData.survey_quiz_name;
   quiz.survey_questions = quizData.survey_quizzes_questions;
   quiz.survey_options = quizData.survey_quizzes_options;
@@ -69,23 +73,7 @@ onMounted(async () => {
     console.log("No enrollment data found for this user.");
   }
 
-  const { data, error } = await client
-    .from("grades")
-    .select("*")
-    .eq("survey_quiz_id", 7)
-    .eq("student_id", user.value.id);
-  if (error) {
-    console.log("Error fetching data from gradebook", error);
-  } else if (data.length > 0) {
-    console.log("Record found, attempt submitted", data);
-    submittedQuiz.value = true;
-  } else {
-    console.log("Record not submitted, can start quiz");
-    const quizForm = document.getElementById("quiz-form");
-    quizForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-    });
-  }
+  
 });
 
 function getImageUrl(questionId) {
@@ -172,6 +160,7 @@ function handleBeforeUnload(event) {
       Return to All Quizzes
     </NuxtLink>
   </div>
+
   <div v-else class="quiz-fullpage bg-emerald-600">
     <form id="quiz-form">
       <div class="title text-white">{{ quiz.quizTitle }}</div>
