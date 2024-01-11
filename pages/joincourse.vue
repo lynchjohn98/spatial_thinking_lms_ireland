@@ -100,7 +100,7 @@ const submitCourseCode = async () => {
         );
       } else {
         alert("Successfully enrolled in the class!");
-        router.push("/dashboard");
+        router.push("/");
       }
     }
   }

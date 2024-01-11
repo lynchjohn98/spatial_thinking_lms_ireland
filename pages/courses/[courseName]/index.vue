@@ -81,7 +81,7 @@ watch(isModulesFetched, (newVal) => {
       </h1>
       <h2 class="text-white font-bold text-1xl mt-2"> Use the links below to navigate your course. </h2>
       <ul class="p-10">
-        <li>
+        <li v-if="courseStore.getCourseType === 'experimental'">
           <NuxtLink
             class="text-white text-bold  m-5 text-2xl bg-emerald-500 rounded-lg pr-2 pl-2 pt-1 pb-1 hover:bg-emerald-600"
             :to="`/courses/${courseStore.getCourseURL}/modules`"
