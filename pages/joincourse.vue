@@ -1,13 +1,15 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { generateUUID } from "@/services/uuidGen.js";
-import { globalVariables } from "@/services/globalVariables.js";
-import { v4 as uuidv4 } from "uuid";
-import _default from "vuex";
+import { onMounted, ref } from "vue";
+import { useCourseStore } from "@/stores/courseStore.js";
+import { useUserStore } from "@/stores/userStore.js";
+import { useSettingsStore } from "@/stores/settingsStore.js";
 
-const client = useSupabaseAuthClient();
+const client = useSupabaseClient();
 const user = useSupabaseUser();
+
+const courseStore = useCourseStore();
+const userStore = useUserStore();
+const settingsStore = useSettingsStore();
 const router = useRouter();
 
 const isEnrolled = ref(false);

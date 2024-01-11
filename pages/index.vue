@@ -64,7 +64,7 @@ async function logOut() {
 
 onMounted(async () => {
   if (user.value === null) {
-    console.log('This ran')
+    console.log("This ran");
   } else {
     //Set the id of the user
     userStore.setUserId(user.value.id);
@@ -100,7 +100,9 @@ onMounted(async () => {
     class="grid min-w-screen min-h-screen place-items-center bg-gradient-to-b from-emerald-500 to-emerald-900"
   >
     <div flex v-if="userStore.getAccountType === 'instructor'">
-      <div class="flex items-center justify-center text-2xl text-white font-bold mb-6">
+      <div
+        class="flex items-center justify-center text-2xl text-white font-bold mb-6"
+      >
         Instructor Dashboard: Welcome {{ userStore.getFullName }}
       </div>
       <div
@@ -145,14 +147,16 @@ onMounted(async () => {
               class="add-course-thumbnail-preview"
             />
             <div class="dashboard-course-name mt-2">
-              {{ course.class_name }} 
+              {{ course.class_name }}
             </div>
           </NuxtLink>
         </div>
       </div>
     </div>
     <div v-else>
-      <div class="flex items-center justify-center text-2xl text-white font-bold mb-6">
+      <div
+        class="flex items-center justify-center text-2xl text-white font-bold mb-6"
+      >
         Student Dashboard: Welcome {{ userStore.getFullName }}
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 place-content-center">
@@ -171,19 +175,19 @@ onMounted(async () => {
           </NuxtLink>
         </div>
         <div v-if="courses.length === 0">
-          <div class="flex items-center justify-center text-2xl text-white font-bold mb-6">
+          <div
+            class="flex items-center justify-center text-2xl text-white font-bold mb-6"
+          >
             You are not enrolled in any courses.
           </div>
           <div>
             Please use the below button to join a Course
-            <NuxtLink 
-            :to="`/joincourse`"
-            >
-          Join Spatial Thinking Course 
-        </NuxtLink>
+            <NuxtLink :to="`/joincourse`">
+              Join Spatial Thinking Course
+            </NuxtLink>
           </div>
+        </div>
       </div>
-      <div></div>
     </div>
   </div>
 </template>

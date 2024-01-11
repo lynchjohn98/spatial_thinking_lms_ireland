@@ -1,7 +1,14 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRouter } from "vue-router";
-import { useRuntimeConfig } from "nuxt/app";
+import { useCourseStore } from "@/stores/courseStore.js";
+import { useUserStore } from "@/stores/userStore.js";
+import { useSettingsStore } from "@/stores/settingsStore.js";
+
+const client = useSupabaseClient();
+const user = useSupabaseUser();
+
+const courseStore = useCourseStore();
+const userStore = useUserStore();
+const settingsStore = useSettingsStore();
 
 const router = useRouter();
 const password = ref("");
@@ -9,9 +16,7 @@ const confirmPassword = ref("");
 const spatialCode = ref("");
 
 const signUpUser = async () => {
-  const instructor_code = useRuntimeConfig().public.teacherCode;
-  const client = useSupabaseClient();
-
+  //const instructor_code = useRuntimeConfig().public.teacherCode;
   console.log(spatialCode.value);
   let { data, error } = await client.auth.signUp({
     email: email.value,
@@ -26,13 +31,10 @@ const signUpUser = async () => {
       },
     },
   });
-
-
-    console.log(data);
     alert(
       `An email has been sent to ${email.value}. Please follow the link to confirm your account. If you  already created an account with ${email.value} you will be automatically signed in.`
     );
-    router.push("/dashboard"); // Navigate to the login page
+    router.push("/"); // Navigate to the login page
   
 };
 </script>

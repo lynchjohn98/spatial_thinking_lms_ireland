@@ -54,7 +54,7 @@ onMounted(async () => {
     console.log("Error fetching data from gradebook", error);
   } else if (data.length > 0) {
     console.log("Record found, attempt submitted", data);
-    submittedQuiz.value = true;
+    submittedQuiz.value = false;
   } else {
     console.log("Record not submitted, can start quiz");
   }
@@ -510,7 +510,7 @@ async function handleSubmit() {
   </div>
   <div v-if="submittedQuiz === true">
     <h2 class="text-black font-bold text-3xl">
-      Thank you for submitting the post intervention survey!
+      Thank you for submitting the mathematics test!
     </h2>
     <NuxtLink
       :to="`/${basePath}`"
