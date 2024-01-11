@@ -38,6 +38,12 @@ onMounted(async () => {
     console.error("Error fetching grade data", gradeError);
     return; // Exit if there was an error
   }
+  
+  if (gradeData.length > 0) {
+    submittedQuiz.value = true;
+    return; // Exit if quiz already submitted
+  }
+
 
   // Now fetch quiz data
   const { data: quizData, error: quizError } = await client
