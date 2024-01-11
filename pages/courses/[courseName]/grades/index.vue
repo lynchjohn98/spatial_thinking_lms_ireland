@@ -67,6 +67,9 @@ onMounted(async () => {
             1: "Not Attempted",
             2: "Not Attempted",
             3: "Not Attempted",
+            6: "Not Attempted",
+            7: "Not Attempted",
+            8: "Not Attempted",
           },
         };
         gradesForStudent.forEach((grade) => {
@@ -98,7 +101,7 @@ onMounted(async () => {
     <div v-if="userStore.getAccountType=== 'instructor'">
       <h2 class="font-bold text-white text-3xl pb-2">Grade Dashboard</h2>
       <div
-        class="flex flex-col w-full justify-center items-center bg-emerald-600 rounded-lg m-4"
+        class="flex flex-col w-full justify-center items-center bg-emerald-500 rounded-lg p-6 mb-4"
       >
         <h3 class="text-white text-2xl mt-2 pb-2">Pre-Test Quizzes</h3>
         <table>
@@ -108,6 +111,9 @@ onMounted(async () => {
               <th>PSVT:R Pre-Test (30 Points)</th>
               <th>DAT:SR Pre-Test (10 Points)</th>
               <th>Mathematics Pre-Test (14 Points)</th>
+              <th>PSVT:R Post-Test (30 Points)</th>
+              <th>DAT:SR Post-Test (10 Points)</th>
+              <th>Mathematics Post-Test (14 Points)</th>
             </tr>
           </thead>
           <tbody>
@@ -132,7 +138,7 @@ onMounted(async () => {
       </div>
 
       <div
-        class="flex flex-col w-full justify-center items-center bg-emerald-600 rounded-lg m-4"
+        class="flex flex-col w-full justify-center items-center bg-emerald-500 rounded-lg p-6"
       >
         <h3 class="text-white text-2xl mt-2 pb-2">Module Quizzes</h3>
         <table>
@@ -185,7 +191,7 @@ table {
 
 th,
 td {
-  border: 1px solid black;
+  border: 3px solid black;
   text-align: center;
   padding: 8px;
 }

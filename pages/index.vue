@@ -170,6 +170,18 @@ onMounted(async () => {
             </div>
           </NuxtLink>
         </div>
+        <div v-if="courses.length === 0">
+          <div class="flex items-center justify-center text-2xl text-white font-bold mb-6">
+            You are not enrolled in any courses.
+          </div>
+          <div>
+            Please use the below button to join a Course
+            <NuxtLink 
+            :to="`/joincourse`"
+            >
+          Join Spatial Thinking Course 
+        </NuxtLink>
+          </div>
       </div>
       <div></div>
     </div>
