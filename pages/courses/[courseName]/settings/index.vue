@@ -163,7 +163,7 @@ async function removeStudent(
     .from("enrollments")
     .delete()
     .eq("student_id", studentId)
-    .eq("class_id", courseStore.course_id);
+    .eq("class_id", courseStore.getCourseId);
 
   if (error) {
     console.log("Error removing student", error);
@@ -200,7 +200,7 @@ async function removeStudent(
             class="text-2xl text-center text-bold"
             style="color: white; font-weight: bold; font-size: larger"
           >
-            {{ courseStore.courseId }}
+            {{ courseStore.courseJoinCode }}
           </h4>
           <h3 class="text-white text-2xl text-center mt-2">Course Type:</h3>
           <p class="text-white text-center">

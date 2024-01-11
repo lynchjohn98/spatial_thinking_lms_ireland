@@ -11,6 +11,18 @@ const courseStore = useCourseStore();
 const userStore = useUserStore();
 const settingsStore = useSettingsStore();
 
+const joinCode = ref("");
+
+async function generateUUID() {
+  return 'xxxx-xxxx'
+  .replace(/[xy]/g, function (c) {
+      const r = Math.random() * 16 | 0, 
+          v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+  });
+}
+const submitSuccess = ref(false);
+
 onMounted(async () => {
   generateJoinCode(); // Generate the join code when the component is mounted
 });
@@ -131,9 +143,9 @@ const togglePopup = () => {
 <template>
   <Navbar></Navbar>
   <div class="absolute top-20 left-4">
-      <NuxtLink to="/dashboard">
+      <NuxtLink to="/">
         <button class="bg-emerald-600 px-4 py-2 text-white rounded">
-          <NuxtLink class="text-white" to="/dashboard">
+          <NuxtLink class="text-white" to="/">
             <Icon
               name="fluent-mdl2:back"
               class="mb-2 main-icon text-white"
@@ -246,7 +258,7 @@ const togglePopup = () => {
         </h3>
 
         <NuxtLink
-          to="/dashboard"
+          to="/"
           class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600"
         >
           Return to Dashboard
