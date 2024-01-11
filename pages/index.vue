@@ -103,6 +103,35 @@ onMounted(async () => {
       <div class="flex items-center justify-center text-2xl text-white font-bold mb-6">
         Instructor Dashboard: Welcome {{ userStore.getFullName }}
       </div>
+      <div
+        class="flex flex-col md:flex-row items-center justify-center md:space-y-0 md:space-x-4"
+      >
+        <NuxtLink to="/addcourse">
+          <button
+            class="font-bold text-2xl px-4 py-2 rounded-lg bg-green-500 shadow focus:shadow-outline"
+          >
+            <Icon name="zondicons:add-outline" class="mb-1" />
+
+            Create New Spatial Thinking Course
+          </button>
+        </NuxtLink>
+        <NuxtLink to="/student-admin">
+          <button
+            class="font-bold text-2xl px-4 py-2 rounded-lg bg-green-500 shadow focus:shadow-outline"
+          >
+            <Icon name="grommet-icons:user-admin" class="mb-1" />
+            Student Account Management
+          </button>
+        </NuxtLink>
+        <NuxtLink to="/course-admin">
+          <button
+            class="font-bold text-2xl px-4 py-2 rounded-lg bg-green-500 shadow focus:shadow-outline"
+          >
+            <Icon name="eos-icons:cluster-management-outlined" class="mb-1" />
+            Course Management Dashboard
+          </button>
+        </NuxtLink>
+      </div>
 
       <!-- Center grid items without enforcing minimum height, allowing content to be centered in the parent -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 place-content-center">
