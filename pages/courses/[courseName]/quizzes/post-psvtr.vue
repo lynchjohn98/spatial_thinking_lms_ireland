@@ -147,19 +147,6 @@ async function handleSubmit(autoSubmit = false) {
   submittedQuiz.value = true;
 }
 
-// Prompt user if they attempt to leave the page
-// Added onBeforeUnmount lifecycle hook
-onBeforeUnmount(() => {
-  window.removeEventListener("beforeunload", handleBeforeUnload);
-});
-
-// Add a new function to handle beforeunload
-function handleBeforeUnload(event) {
-  // your submit logic here...
-  event.preventDefault();
-  event.returnValue =
-    "Leaving will submit your quiz. Are you sure you want to leave?";
-}
 
 //Refresh the main window:
 </script>
