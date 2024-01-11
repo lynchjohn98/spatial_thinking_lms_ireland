@@ -21,21 +21,6 @@ const submittedQuiz = ref(false);
 const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 onMounted(async () => {
-  // console.log("This is now running");
-  // const { data: gradeData, error: gradeError } = await client
-  //   .from("grades")
-  //   .select("*")
-  //   .eq("survey_quiz_id", 2)
-  //   .eq("student_id", user.value.id);
-  // if (gradeError) {
-  //   console.error("Error fetching grade data", gradeError);
-  //   return; // Exit if there was an error
-  // }
-  // if (gradeData.length > 0) {
-  //   submittedQuiz.value = false;
-  //   return;
-  // }
-
   const { data: quizData, error: quizError } = await client
     .from("survey_quizzes")
     .select(
@@ -60,7 +45,6 @@ onMounted(async () => {
   quiz.survey_images = quizData.survey_quizzes_images;
   quiz.survey_answers = quizData.survey_quizzes_correct_answers;
 
-
   const { data: enrollmentData, error: enrollmentError } = await client
     .from("enrollments")
     .select("class_id")
@@ -72,8 +56,6 @@ onMounted(async () => {
   } else {
     console.log("No enrollment data found for this user.");
   }
-
-  
 });
 
 function getImageUrl(questionId) {
@@ -90,9 +72,6 @@ function getOptions(questionId) {
 }
 
 async function handleSubmit() {
-  console.log('Handling the submission of the quiz')
-  console.log(selectedOptions.value);
-  console.log('HGERE the submission of the quiz')
   const numQuestionsAnswered = Object.values(selectedOptions.value).filter(
     (v) => v !== null && v !== undefined && v !== ""
   ).length;
@@ -102,7 +81,6 @@ async function handleSubmit() {
     );
     return;
   }
-
   const correctAnswersObject = quiz.survey_answers.reduce((acc, answer) => {
     acc[answer.survey_quizzes_question_id] = answer.survey_quizzes_options_id;
     return acc;
@@ -120,9 +98,7 @@ async function handleSubmit() {
       quizScore.value += 1;
     }
   }
-  console.log(numQuestionsAnswered);
-  console.log(quizScore.value)
-  console.log(correctAnswersObject);
+
   const payload = {
     student_id: user.value.id,
     survey_quiz_id: 2,
@@ -140,15 +116,6 @@ async function handleSubmit() {
   submittedQuiz.value = true;
 }
 
-onBeforeUnmount(() => {
-  window.removeEventListener("beforeunload", handleBeforeUnload);
-});
-
-function handleBeforeUnload(event) {
-  event.preventDefault();
-  event.returnValue =
-    "Leaving will submit your quiz. Are you sure you want to leave?";
-}
 </script>
 
 <template>
@@ -169,38 +136,36 @@ function handleBeforeUnload(event) {
   </div>
 
   <div v-else class="quiz-fullpage bg-emerald-600">
-    <form id="quiz-form">
-      <div class="title text-white">{{ quiz.quizTitle }}</div>
-      <div
-        v-for="(question, index) in quiz.survey_questions"
-        :key="index"
-        class="question bg-emerald-500 border-gray-500 border rounded-lg m-2 p-2 w-1/2"
-        :id="question.id"
-      >
-        <p class="text-white text-2xl">Question {{ index + 1 }}</p>
-        <div class="image-container m-2" v-if="getImageUrl(question.id)">
-          <img class="" :src="getImageUrl(question.id)" />
-        </div>
-        <div class="options-container">
-          <div
-            v-for="option in getOptions(question.id)"
-            :key="option.id"
-            class="option text-white font-bold"
-          >
-            <label>
-              <input
-                class="m-2 text-white"
-                type="radio"
-                :name="question.id"
-                :value="option.id"
-                v-model="selectedOptions[question.id]"
-              />
-              {{ option.option }}
-            </label>
-          </div>
+    <div class="title text-white">{{ quiz.quizTitle }}</div>
+    <div
+      v-for="(question, index) in quiz.survey_questions"
+      :key="index"
+      class="question bg-emerald-500 border-gray-500 border rounded-lg m-2 p-2 w-1/2"
+      :id="question.id"
+    >
+      <p class="text-white text-2xl">Question {{ index + 1 }}</p>
+      <div class="image-container m-2" v-if="getImageUrl(question.id)">
+        <img class="" :src="getImageUrl(question.id)" />
+      </div>
+      <div class="options-container">
+        <div
+          v-for="option in getOptions(question.id)"
+          :key="option.id"
+          class="option text-white font-bold"
+        >
+          <label>
+            <input
+              class="m-2 text-white"
+              type="radio"
+              :name="question.id"
+              :value="option.id"
+              v-model="selectedOptions[question.id]"
+            />
+            {{ option.option }}
+          </label>
         </div>
       </div>
-      <button @click="handleSubmit">Submit</button>
-    </form>
+    </div>
+    <button @click="handleSubmit">Submit</button>
   </div>
 </template>
