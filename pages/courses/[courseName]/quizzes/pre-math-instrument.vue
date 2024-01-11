@@ -92,7 +92,7 @@ async function handleSubmit() {
 
 <template>
   <div v-if="submittedQuiz === false" class="quiz-fullpage bg-emerald-700">
-    <div class="title text-white">Math Instrument Post Test</div>
+    <div class="title text-white">Math Instrument Pre Test</div>
     <div
       class="question bg-emerald-600 text-white border-gray-500 border rounded-lg m-2 p-2 w-1/2"
     >
@@ -507,7 +507,7 @@ async function handleSubmit() {
     <button @click="handleSubmit">Submit</button>
   </div>
   <div v-if="submittedQuiz" class="quiz-fullpage bg-emerald-700 min-h-screen w-full flex flex-col justify-center items-center">
-    <h1 class="text-white text-2xl text-center px-6 py-4">Post-Math Instrument Submitted</h1>
+    <h1 class="text-white text-2xl text-center px-6 py-4">Pre-Math Instrument Submitted</h1>
     <!--- Can edit here to display the score if needed -->
     <NuxtLink :to="`/${basePath}`" class="bg-emerald-500 w-auto px-6 py-4 text-white text-2xl text-center rounded">
       Return to All Quizzes

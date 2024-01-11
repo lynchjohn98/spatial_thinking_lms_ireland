@@ -27,7 +27,6 @@ const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 
 onMounted(async () => {
-  window.addEventListener("beforeunload", handleBeforeUnload);
 
   const { data: gradeData, error: gradeError } = await client
     .from("grades")

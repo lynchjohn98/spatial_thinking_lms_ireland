@@ -1,7 +1,8 @@
 <script setup>
 import { useCourseStore } from "@/stores/courseStore.js";
-
+import { useUserStore } from "@/stores/userStore.js";
 const courseStore = useCourseStore();
+const userStore = useUserStore();
 const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 const consent = ref("");
@@ -242,7 +243,7 @@ const submitSurvey = async () => {
       .insert([
         {
           class_id: courseStore.getCourseId,
-          student_id: user.value.id,
+          student_id: userStore.getUserId,
           score: 0,
           quiz_id: 13,
           attempt_count: 1,
@@ -251,9 +252,11 @@ const submitSurvey = async () => {
       ]);
     if (quizData) {
       console.log("Successful insertion");
+      surveySubmitted.value = true;
     } else {
       console.log("Error", quizError);
       console.log(courseStore.getCourseId, user.value.id, payload)
+      surveySubmitted.value = true;
     }
   } else {
     console.error("Please fill in all required fields.");
@@ -264,15 +267,20 @@ const submitSurvey = async () => {
 </script>
 
 <template >
-  <div v-if="surveySubmitted" class="">
-    <h2 class="text-black  font-bold text-3xl">
-      Thank you for submitting the post intervention survey!
-    </h2>
-    <NuxtLink :to="`/${basePath}`" class=" bg-emerald-500  text-white text-2xl text-center">
-      <button> Return to All Quizzes</button>
+  <div v-if="surveySubmitted" class="quiz-fullpage bg-emerald-700 min-h-screen w-full flex flex-col justify-center items-center"
+  >
+    <h1 class="text-white text-2xl text-center px-6 py-4">
+      Post-Intervention Survey  Submitted
+    </h1>
+    <!--- Can edit here to display the score if needed -->
+    <NuxtLink
+      :to="`/${basePath}`"
+      class="bg-emerald-500 w-auto px-6 py-4 text-white text-2xl text-center rounded"
+    >
+      Return to All Quizzes
     </NuxtLink>
-    
   </div>
+  
   <div v-else class="quiz-fullpage bg-emerald-700 p-6 rounded-lg">
     <h2 class="font-bold text-2xl mb-4 text-white">
       Spatial Thinking Post Intervention Survey
