@@ -5,7 +5,6 @@ import { useCourseStore } from "@/stores/courseStore.js";
 import { useUserStore } from "@/stores/userStore.js";
 import { handleSubmitQuiz } from "@/services/quizFunctions.js";
 import { useRouter } from 'vue-router';
-import { useUserStore } from "@/stores/userStore.js";
 
 const userStore = useUserStore();
 
@@ -13,6 +12,7 @@ const userStore = useUserStore();
 const router = useRouter();
 const basePath = router.currentRoute.value.fullPath.replace(/\/quiz-\d+$/, '');
 
+const newUpdates = false;
 
 //Get objects
 const user = useSupabaseUser();
