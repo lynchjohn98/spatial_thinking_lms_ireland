@@ -159,7 +159,6 @@ async function handleSubmit(autoSubmit = false) {
     <NuxtLink :to="`/${basePath}`" class="bg-emerald-500 w-auto px-6 py-4 text-white text-2xl text-center rounded">
       Return to All Quizzes
     </NuxtLink>
-    {{ userStore }}
 </div>
   <div v-else class="quiz-fullpage">
     <form id="quiz-form">
