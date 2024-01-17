@@ -20,6 +20,7 @@ export default defineNuxtConfig({
         '/login',
         '/manual-login',
         '/reset',
+        '/update',
       ]
     }
   },

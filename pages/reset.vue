@@ -4,18 +4,13 @@ import { useUserStore } from "@/stores/userStore.js";
 import { useSettingsStore } from "@/stores/settingsStore.js";
 
 const client = useSupabaseClient();
-const user = useSupabaseUser();
-
-const courseStore = useCourseStore();
-const userStore = useUserStore();
-const settingsStore = useSettingsStore();
 
 const credentials = {
   email: "",
 };
 
 async function resetPassword() {
-  console.log("This has been used");
+  console.log("This has been used", email.value);
   const { data, error } = await client
     .from("profiles")
     .select("*")
@@ -31,6 +26,7 @@ async function resetPassword() {
       alert(
         "Email sent, please close this window and continue to the link provided in the email."
       );
+      console.log()
     } catch (err) {
       console.error("Error during password reset request:", err);
       alert(
