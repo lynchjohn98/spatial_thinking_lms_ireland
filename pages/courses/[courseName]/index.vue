@@ -10,7 +10,9 @@ const userStore = useUserStore();
 const courseStore = useCourseStore();
 const settingsStore = useSettingsStore();
 const route = useRoute();
+
 const course_url = route.params.courseName;
+
 const [nameValue, course_id] = route.params.courseName.split("__");
 
 // Computed property to check if quizzes are fetched and valid
@@ -56,6 +58,8 @@ onMounted(async () => {
   courseStore.setCourseURL(course_url);
 
   // Set settings in course
+  console.log(data[0]);
+  console.log(data[0].id)
   settingsStore.setCourseId(data[0].id);
   await settingsStore.fetchModuleSettings(data[0].id, client);
   await settingsStore.fetchQuizSettings(data[0].id, client);
