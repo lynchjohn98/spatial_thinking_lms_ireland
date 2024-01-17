@@ -40,8 +40,8 @@ async function signInWithEmail() {
     email: email.value,
     options: {
       // set this to false if you do not want the user to be automatically signed up
-      shouldCreateUser: false,
-      emailRedirectTo: "http://localhost:3000/*",
+      shouldCreateUser: true,
+      emailRedirectTo: "https://spatialthinking.netlify.app/",
     },
   });
 }

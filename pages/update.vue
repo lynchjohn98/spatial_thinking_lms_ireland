@@ -5,6 +5,7 @@ import { useSettingsStore } from "@/stores/settingsStore.js";
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
+const router = useRouter();
 
 const courseStore = useCourseStore();
 const userStore = useUserStore();
@@ -36,11 +37,11 @@ async function updatePassword() {
 
     if (error) {
       console.log("Error logging in after password update:", error.message);
-      alert("Error logging in. Please sign in manually.");
+      alert("Error logging in. Please try to sign in using your email and no password.");
       router.push("/login"); // Redirect to login page
     } else {
       alert("Password updated and logged in successfully");
-      router.push("/dashboard");
+      router.push("/");
     }
   } else {
     console.log("Error updating password", response.error);
