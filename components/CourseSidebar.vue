@@ -61,9 +61,9 @@ const courseStore = useCourseStore();
               <p class="mr-4">Quizzes</p></NuxtLink
             >
           </li>
-          <li>
+          <li v-if="userStore.getAccountType === 'instructor'">
             <NuxtLink
-              v-if="userStore.getAccountType == 'instructor'"
+              
               :to="'/courses/' + courseStore.getCourseURL + '/grades'"
               class="flex items-center justify-between py-4 border-t border-b border-gray-700 hover:bg-gray-700 w-full"
             >
