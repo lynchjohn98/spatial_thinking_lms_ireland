@@ -18,47 +18,33 @@ const instructor_code ="ce6e5235-64f5-4d56-99dc-f17ba857c85a"
 
 
 const signUpUser = async () => {
+  //const instructor_code = useRuntimeConfig().public.teacherCode;
+  console.log(spatialCode.value);
+  const accountType = spatialCode.value === instructor_code ? "instructor" : "student";
+  console.log('HERE: ', accountType);
   let { data, error } = await client.auth.signUp({
     email: email.value,
     password: password.value,
+    options: {
+      data: {
+        first_name: firstName.value,
+        last_name: lastName.value,
+        spatialCode: spatialCode.value,
+        account_type:
+          spatialCode.value === instructor_code ? "instructor" : "student",
+      },
+    },
     if (error) {
       console.log(error);
       return;
     }
   });
     alert(
-      `An email has been sent to ${email.value}. Please follow the link to confirm your account. If you  already created an account with ${email.value} you will be automatically signed in.`
+      `An account has been created under ${email.value}. You will be automatically logged in, please remember this email for password resets or email logins.`
     );
     router.push("/"); // Navigate to the login page
   
 };
-
-// const signUpUser = async () => {
-//   //const instructor_code = useRuntimeConfig().public.teacherCode;
-//   console.log(spatialCode.value);
-//   let { data, error } = await client.auth.signUp({
-//     email: email.value,
-//     password: password.value,
-//     options: {
-//       data: {
-//         first_name: firstName.value,
-//         last_name: lastName.value,
-//         spatialCode: spatialCode.value,
-//         account_type:
-//           spatialCode.value === instructor_code ? "instructor" : "student",
-//       },
-//     },
-//     if (error) {
-//       console.log(error);
-//       return;
-//     }
-//   });
-//     alert(
-//       `An email has been sent to ${email.value}. Please follow the link to confirm your account. If you  already created an account with ${email.value} you will be automatically signed in.`
-//     );
-//     router.push("/"); // Navigate to the login page
-  
-// };
 </script>
 
 <template>

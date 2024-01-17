@@ -111,7 +111,7 @@ async function signInWithEmail() {
               <button
                 class="px-4 py-2 text-purple-100 transition-colors duration-150 bg-purple-700 rounded-lg focus:shadow-outline hover:bg-purple-800"
               >
-                Create Account
+                Register for New Account
               </button>
             </NuxtLink>
             <NuxtLink to="/reset">
