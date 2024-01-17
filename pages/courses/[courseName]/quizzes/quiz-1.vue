@@ -2,10 +2,10 @@
 import { ref, onMounted, reactive } from "vue";
 import { useQuizStore } from "@/stores/quizStore.js";
 import { useCourseStore } from "@/stores/courseStore.js";
-import { useUserStore } from "@/stores/userStore.js";
 import { handleSubmitQuiz } from "@/services/quizFunctions.js";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/userStore.js";
+
 
 const userStore = useUserStore();
 //Get old url for reference later
