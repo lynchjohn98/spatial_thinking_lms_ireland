@@ -17,6 +17,7 @@ const [nameValue, course_id] = route.params.courseName.split("__");
 
 // Computed property to check if quizzes are fetched and valid
 function checkQuizzes() {
+  
   const quizzes = settingsStore.quiz_visibility;
   if (quizzes === null || quizzes === undefined || quizzes.length < 17) {
     settingsStore.ensureDefaultQuizzes(client);
@@ -39,6 +40,7 @@ const isModulesFetched = computed(
 onMounted(async () => {
   console.log('Current user store:', userStore.getEmail)
   console.log('Current user store:', userStore.getFirstName)
+  console.log('Current course id: ', course_id);
   const { data, error } = await client
     .from("classes")
     .select("*")
