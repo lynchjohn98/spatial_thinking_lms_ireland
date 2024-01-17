@@ -27,6 +27,7 @@ const toggleQuizTableVisibility = () => {
 };
 
 onMounted(async () => {
+  courseStore.setCourseId(148);
   await settingsStore.fetchModuleSettings(courseStore.getCourseId, client);
   await settingsStore.fetchQuizSettings(courseStore.getCourseId, client);
   fetchEnrolledStudents();
@@ -153,7 +154,7 @@ async function removeStudent(
   const confirmed = window.confirm(
     `Are you sure you want to remove student ${
       studentFirstName + " " + studentLastName
-    } (email: ${studentEmail}) from the course ${courseStore.course_name}?`
+    } (email: ${studentEmail}) from the course ${courseStore.courseName}?`
   );
   if (!confirmed) {
     return; // Exit the function if not confirmed
