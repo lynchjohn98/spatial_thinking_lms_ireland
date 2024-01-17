@@ -29,21 +29,21 @@ export const useSettingsStore = defineStore("settingsStore", {
         console.log(error);
       }
       this.module_visibility = data[0].module_visibility;
-      const postTestIndex = this.module_visibility.findIndex(
-        (m) => m.name === "post-test"
-      );
-      if (postTestIndex !== -1) {
-        this.module_visibility.splice(postTestIndex, 1); // Remove the 'post-tests' module
-        const { data, error } = await client
-          .from("classes_settings")
-          .update({ module_visibility: this.module_visibility })
-          .eq("class_id", courseId);
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Post test found as was removed.");
-        }
-      }
+      // const postTestIndex = this.module_visibility.findIndex(
+      //   (m) => m.name === "post-test"
+      // );
+      // if (postTestIndex !== -1) {
+      //   this.module_visibility.splice(postTestIndex, 1); // Remove the 'post-tests' module
+      //   const { data, error } = await client
+      //     .from("classes_settings")
+      //     .update({ module_visibility: this.module_visibility })
+      //     .eq("class_id", courseId);
+      //   if (error) {
+      //     console.log(error);
+      //   } else {
+      //     console.log("Post test found as was removed.");
+      //   }
+      // }
       this.module_visibility = data[0].module_visibility;
     },
 
