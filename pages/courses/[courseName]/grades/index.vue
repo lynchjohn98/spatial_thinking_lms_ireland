@@ -15,6 +15,7 @@ const instructorData = ref({});
 const moduleOrder = ["3", "2", "4", "7", "8", "10", "11", "9", "5", "6"];
 
 onMounted(async () => {
+  //Set course id to different value for testing
   //Fetch all enrollments for class
   if (userStore.getAccountType === "instructor") {
     try {

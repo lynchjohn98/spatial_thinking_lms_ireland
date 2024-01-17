@@ -3,6 +3,8 @@ import { onMounted, ref } from "vue";
 import { useCourseStore } from "@/stores/courseStore.js";
 import { useUserStore } from "@/stores/userStore.js";
 import { useSettingsStore } from "@/stores/settingsStore.js";
+import { quizList } from "@/services/quizList.js";
+import { moduleList } from "@/services/moduleList.js";
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
@@ -10,15 +12,16 @@ const user = useSupabaseUser();
 const courseStore = useCourseStore();
 const userStore = useUserStore();
 const settingsStore = useSettingsStore();
-
+const thumbnailFile = ref("");
+const selectedCourseType = ref("");
 const joinCode = ref("");
+const uploadedThumbnail = ref(false);
 
 async function generateUUID() {
-  return 'xxxx-xxxx'
-  .replace(/[xy]/g, function (c) {
-      const r = Math.random() * 16 | 0, 
-          v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
+  return "xxxx-xxxx".replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
   });
 }
 const submitSuccess = ref(false);
@@ -39,12 +42,17 @@ const handleThumbnailUpload = (event) => {
     thumbnailPreview.value = reader.result;
   };
   reader.readAsDataURL(thumbnailFile.value);
+  uploadedThumbnail.value = true;
 };
 
 const submitForm = async () => {
   let thumbnailUrl = null;
-  if (thumbnailFile.value != null) {
-    const filename = `${uuidv4()}-${thumbnailFile.value.name}`;
+  if (uploadedThumbnail.value === true) {
+    const filename = `${joinCode.value}-${thumbnailFile.value.name}`;
+    if (thumbnailFile.value === "undefined") {
+      console.log("Undefined hit");
+      thumbnailFile.value = "default_thumbnail";
+    }
     const { data, error } = await client.storage
       .from("thumbnail_images")
       .upload(filename, thumbnailFile.value, {
@@ -52,11 +60,11 @@ const submitForm = async () => {
         upsert: false,
       });
     thumbnailUrl = `https://ketcslswwsvlsdcnvgll.supabase.co/storage/v1/object/public/thumbnail_images/${data.path}`;
-  } else {
-    console.log("No image was uploaded");
+  }
+  else {
     thumbnailUrl =
       "https://ketcslswwsvlsdcnvgll.supabase.co/storage/v1/object/public/thumbnail_images/default_thumbnail";
-  }
+  } 
   //Get current date
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();
@@ -94,9 +102,6 @@ const insertClassSettings = async () => {
   } else {
     //Get class ID
     const classId = data[0].id;
-    //Stringify the module and quiz lists
-    //const JSONModuleList = JSON.stringify(moduleList);
-    //const JSONquizList = JSON.stringify(quizList);
     if (selectedCourseType.value === "control") {
       const { data: settingsData, error: settingsError } = await client
         .from("classes_settings")
@@ -143,27 +148,25 @@ const togglePopup = () => {
 <template>
   <Navbar></Navbar>
   <div class="absolute top-20 left-4">
-      <NuxtLink to="/">
-        <button class="bg-emerald-600 px-4 py-2 text-white rounded">
-          <NuxtLink class="text-white" to="/">
-            <Icon
-              name="fluent-mdl2:back"
-              class="mb-2 main-icon text-white"
-              size="20"
-            />
-            Back to Dashboard
-          </NuxtLink>
-        </button>
-      </NuxtLink>
-    </div>
+    <NuxtLink to="/">
+      <button class="bg-emerald-600 px-4 py-2 text-white rounded">
+        <NuxtLink class="text-white" to="/">
+          <Icon
+            name="fluent-mdl2:back"
+            class="mb-2 main-icon text-white"
+            size="20"
+          />
+          Back to Dashboard
+        </NuxtLink>
+      </button>
+    </NuxtLink>
+  </div>
   <div v-if="userStore.getAccountType === 'instructor'">
     <div
       class="min-w-screen min-h-screen flex flex-col items-center justify-center px-5 py-5 bg-gradient-to-b from-emerald-500 to-emerald-900"
     >
       <div>
-       
         <h1 class="text-2xl font-bold mb-4 text-white">
-          
           Create New Course
 
           <NuxtLink @click="togglePopup">
@@ -250,7 +253,7 @@ const togglePopup = () => {
         <p>Course created!</p>
 
         <p>
-          Please use this code to have registered students' join your course.
+          Please use this code to have registered students join your course.
           This code is stored in the course settings page.
         </p>
         <h3 class="text-2xl py-4 font-bold">

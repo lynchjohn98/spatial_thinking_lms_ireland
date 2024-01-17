@@ -9,10 +9,13 @@ const user = useSupabaseUser();
 const router = useRouter();
 
 async function logIn() {
+
+  
   if (email.value === "" || password.value === "") {
     alert("Email or password is empty. Please try again.");
     return;
   }
+
   let { data, error } = await client.auth.signInWithPassword({
     email: email.value,
     password: password.value,

@@ -49,6 +49,7 @@ onMounted(async () => {
   // Set course data
   courseStore.setCourseName(data[0].class_name);
   courseStore.setCourseId(data[0].id);
+  
   courseStore.setCourseInstructor(data[0].instructor_id);
   courseStore.setCourseType(data[0].class_type);
   courseStore.setCourseJoinCode(data[0].class_join_code);

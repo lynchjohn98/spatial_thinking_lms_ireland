@@ -28,6 +28,7 @@ const selectedAnswers = reactive({});
 const subChoiceQuestions = reactive([]);
 const correctAnswers = reactive({});
 const score = ref(0);
+const canTakeQuiz = ref(true);
 
 //const selectedIndices = [0,1];
 const selectedIndices = [0, 1, 2, 3, 10, 11, 12, 13, 17];
@@ -76,7 +77,7 @@ onMounted(async () => {
     const { data: quizData, error: quizError } = await client
       .from("classes_settings")
       .select("quiz_visibility")
-      .eq("class_id", courseStore.course_id);
+      .eq("class_id", courseStore.getCourseId);
     if (quizError) {
       console.log("Error fetching quiz visibility data", quizError);
     } else {
@@ -181,7 +182,7 @@ async function submitStudentData() {
     .from("grades")
     .insert([
       {
-        class_id: courseStore.course_id,
+        class_id: courseStore.getCourseId,
         student_id: user.value.id,
         quiz_id: 8,
         score: userScore.value,
