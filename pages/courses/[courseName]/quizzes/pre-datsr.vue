@@ -1,7 +1,9 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { useCourseStore } from "@/stores/courseStore.js";
+import { useUserStore } from "@/stores/userStore.js";
 
+const userStore = useUserStore();
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const courseStore = useCourseStore();
@@ -48,7 +50,7 @@ onMounted(async () => {
   const { data: enrollmentData, error: enrollmentError } = await client
     .from("enrollments")
     .select("class_id")
-    .eq("student_id", user.value.id);
+    .eq("student_id", userStore.getUserId);
   if (enrollmentError) {
     console.log("Error in fetching data", enrollmentError);
   } else if (enrollmentData.length > 0) {
@@ -100,7 +102,7 @@ async function handleSubmit() {
   }
 
   const payload = {
-    student_id: user.value.id,
+    student_id: userStore.getUserId,
     survey_quiz_id: 2,
     score: quizScore.value,
     class_id: courseStore.getCourseId,

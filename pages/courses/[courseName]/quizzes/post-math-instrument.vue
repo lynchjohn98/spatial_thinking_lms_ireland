@@ -2,6 +2,9 @@
 import { ref, reactive, onMounted } from "vue";
 import { useCourseStore } from "@/stores/courseStore.js";
 import { gradeMathTest } from "~/services/mathInstrumentGrader";
+import {useUserStore } from "@/stores/userStore.js"
+
+const userStore = useUserStore();
 const user = useSupabaseUser();
 const client = useSupabaseClient();
 const submittedQuiz = ref(false);
@@ -49,7 +52,7 @@ onMounted(async () => {
     .from("grades")
     .select("*")
     .eq("survey_quiz_id", 8)
-    .eq("student_id", user.value.id);
+    .eq("student_id", userStore.getUserId);
   if (error) {
     console.log("Error fetching data from gradebook", error);
   } else if (data.length > 0) {
@@ -73,7 +76,7 @@ async function handleSubmit() {
   //Send data to backend
   const { data, error } = await client.from("grades").insert([
     {
-      student_id: user.value.id,
+      student_id: userStore.getUserId,
       survey_quiz_id: 8,
       score: quizScore,
       class_id: courseStore.getCourseId,

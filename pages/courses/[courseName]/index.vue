@@ -74,6 +74,7 @@ watch(isModulesFetched, (newVal) => {
 </script>
 
 <template>
+  {{ userStore }}
   <Navbar></Navbar>
   <CourseSidebar>
     <div class="flex flex-col align-middle">

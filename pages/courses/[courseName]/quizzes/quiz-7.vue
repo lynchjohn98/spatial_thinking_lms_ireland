@@ -9,6 +9,7 @@ import { useRouter } from "vue-router";
 //Get old url for reference later
 const router = useRouter();
 const basePath = router.currentRoute.value.fullPath.replace(/\/quiz-\d+$/, "");
+const userStore = useUserStore();
 
 //Get objects
 const user = useSupabaseUser();

@@ -19,9 +19,7 @@ const instructor_code ="ce6e5235-64f5-4d56-99dc-f17ba857c85a"
 
 const signUpUser = async () => {
   //const instructor_code = useRuntimeConfig().public.teacherCode;
-  console.log(spatialCode.value);
   const accountType = spatialCode.value === instructor_code ? "instructor" : "student";
-  console.log('HERE: ', accountType);
   let { data, error } = await client.auth.signUp({
     email: email.value,
     password: password.value,

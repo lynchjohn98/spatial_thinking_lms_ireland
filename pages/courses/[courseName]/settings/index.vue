@@ -27,7 +27,6 @@ const toggleQuizTableVisibility = () => {
 };
 
 onMounted(async () => {
-  courseStore.setCourseId(148);
   await settingsStore.fetchModuleSettings(courseStore.getCourseId, client);
   await settingsStore.fetchQuizSettings(courseStore.getCourseId, client);
   fetchEnrolledStudents();
@@ -35,7 +34,6 @@ onMounted(async () => {
 
 //Change class type between control and experimental if they did not create this earlier
 const handleCourseTypeChange = (event) =>{
-  console.log('Rann')
   const selectedCourseType = event.target.value;
   updateCourseType(selectedCourseType); 
 };
@@ -154,7 +152,7 @@ async function removeStudent(
   const confirmed = window.confirm(
     `Are you sure you want to remove student ${
       studentFirstName + " " + studentLastName
-    } (email: ${studentEmail}) from the course ${courseStore.courseName}?`
+    } (email: ${studentEmail}) from the course ${courseStore.getCourseName}?`
   );
   if (!confirmed) {
     return; // Exit the function if not confirmed

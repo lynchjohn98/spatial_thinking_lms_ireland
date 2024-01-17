@@ -5,7 +5,9 @@ import { useCourseStore } from "@/stores/courseStore.js";
 import { useUserStore } from "@/stores/userStore.js";
 import { handleSubmitQuiz } from "@/services/quizFunctions.js";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userStore.js";
 
+const userStore = useUserStore();
 //Get old url for reference later
 const router = useRouter();
 const basePath = router.currentRoute.value.fullPath.replace(/\/quiz-\d+$/, "");
@@ -50,7 +52,7 @@ async function submitQuiz() {
     const { data, error } = await client.from("grades").insert([
       {
         class_id: courseStore.getCourseId,
-        student_id: user.value.id,
+        student_id: userStore.getUserId,
         quiz_id: 3,
         score: finalScore.value,
         attempt_count: attemptPayload,

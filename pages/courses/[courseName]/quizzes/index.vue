@@ -38,6 +38,7 @@ onMounted(async () => {
 <template>
   <Navbar></Navbar>
   <CourseSidebar>
+    {{ userStore }}
     <div class="flex flex-col">
       <div class="font-bold text-white text-3xl">Spatial Thinking Quizzes</div>
       <div>

@@ -3,6 +3,7 @@
 
 import { ref, reactive, onMounted } from "vue";
 import { useCourseStore } from "@/stores/courseStore.js";
+import { useUserStore } from "@/stores/userStore.js";
 
 const quiz = reactive({
   quizTitle: "",
@@ -12,6 +13,7 @@ const quiz = reactive({
   survey_answers: [],
 });
 
+const userStore = useUserStore();
 const quizScore = ref(0);
 const classId = ref(0);
 const selectedOptions = ref({});
@@ -32,7 +34,7 @@ onMounted(async () => {
     .from("grades")
     .select("*")
     .eq("survey_quiz_id", 1)
-    .eq("student_id", user.value.id);
+    .eq("student_id", userStore.getUserId);
 
   if (gradeError) {
     console.error("Error fetching grade data", gradeError);
@@ -73,7 +75,7 @@ onMounted(async () => {
   const { data: enrollmentData, error: enrollmentError } = await client
     .from("enrollments")
     .select("class_id")
-    .eq("student_id", user.value.id);
+    .eq("student_id", userStore.getUserId);
 
   if (enrollmentError) {
     console.log("Error in fetching data", enrollmentError);
@@ -134,7 +136,7 @@ async function handleSubmit(autoSubmit = false) {
   }
 
   const payload = {
-    student_id: user.value.id,
+    student_id: userStore.getUserId,
     survey_quiz_id: 1,
     score: quizScore.value,
     class_id: courseStore.getCourseId,

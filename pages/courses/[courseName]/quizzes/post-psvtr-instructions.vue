@@ -10,6 +10,7 @@ import { useRouter } from "vue-router";
 const client = useSupabaseClient();
 const quizStore = useQuizStore();
 const courseStore = useCourseStore();
+const userStore = useUserStore();
 
 //Get old url for reference later
 const router = useRouter();
@@ -43,6 +44,7 @@ function updateButton2() {
 </script>
 
 <template>
+  {{ userStore }}
   <div class="bg-emerald-600 flex flex-col text-white">
     <NuxtLink :to="`/${basePath}`" class="space-x-2">
       <div class="font-bold text-2xl m-1 whitespace-pre-line text-white">

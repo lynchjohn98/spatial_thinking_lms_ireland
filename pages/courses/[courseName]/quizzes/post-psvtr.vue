@@ -3,6 +3,7 @@
 
 import { ref, reactive, onMounted } from "vue";
 import { useCourseStore } from "@/stores/courseStore.js";
+import { useUserStore } from "@/stores/userStore.js";
 
 const quiz = reactive({
   quizTitle: "",
@@ -22,15 +23,15 @@ const user = useSupabaseUser();
 const client = useSupabaseClient();
 const quizStore = useQuizStore();
 const courseStore = useCourseStore();
+const userStore = useUserStore();
 const basePath = "courses/" + courseStore.getCourseURL + "/quizzes";
 
 onMounted(async () => {
-  console.log('HERE: ', user.value.id);
   const { data: gradeData, error: gradeError } = await client
     .from("grades")
     .select("*")
     .eq("survey_quiz_id", 6)
-    .eq("student_id", user.value.id);
+    .eq("student_id", userStore.getUserId);
 
   if (gradeError) {
     console.error("Error fetching grade data", gradeError);
@@ -71,7 +72,7 @@ onMounted(async () => {
   const { data: enrollmentData, error: enrollmentError } = await client
     .from("enrollments")
     .select("class_id")
-    .eq("student_id", user.value.id);
+    .eq("student_id", userStore.getUserId);
 
   if (enrollmentError) {
     console.log("Error in fetching data", enrollmentError);
@@ -130,7 +131,7 @@ async function handleSubmit(autoSubmit = false) {
   }
 
   const payload = {
-    student_id: user.value.id,
+    student_id: userStore.getUserId,
     survey_quiz_id: 6,
     score: quizScore.value,
     class_id: courseStore.getCourseId,
@@ -158,6 +159,7 @@ async function handleSubmit(autoSubmit = false) {
     <NuxtLink :to="`/${basePath}`" class="bg-emerald-500 w-auto px-6 py-4 text-white text-2xl text-center rounded">
       Return to All Quizzes
     </NuxtLink>
+    {{ userStore }}
 </div>
   <div v-else class="quiz-fullpage">
     <form id="quiz-form">

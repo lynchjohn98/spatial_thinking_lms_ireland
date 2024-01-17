@@ -68,6 +68,7 @@ onMounted(async () => {
   } else {
     //Set the id of the user
     userStore.setUserId(user.value.id);
+
     let { data, error } = await client
       .from("profiles")
       .select("*")
@@ -91,7 +92,6 @@ onMounted(async () => {
     }
   }
 });
-
 </script>
 
 <template>
@@ -176,17 +176,17 @@ onMounted(async () => {
           </NuxtLink>
         </div>
       </div>
-    </div>
-    <div v-if="courses.length === 0">
-      <div
-        class="flex items-center justify-center text-2xl text-white font-bold mb-6"
-      >
-        You are not enrolled in any courses.
-      </div>
-      <div>
-        <NuxtLink :to="`/joincourse`">
-          <button>Join Spatial Thinking Course</button>
-        </NuxtLink>
+      <div v-if="courses.length === 0">
+        <div
+          class="flex items-center justify-center text-2xl text-white font-bold mb-6"
+        >
+          You are not enrolled in any courses.
+        </div>
+        <div>
+          <NuxtLink :to="`/joincourse`">
+            <button>Join Spatial Thinking Course</button>
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>

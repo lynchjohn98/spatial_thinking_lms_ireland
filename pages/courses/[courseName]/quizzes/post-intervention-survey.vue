@@ -178,7 +178,7 @@ onMounted(async () => {
   const { data, error } = await client
     .from("grades")
     .select("*")
-    .eq("student_id", user.value.id)
+    .eq("student_id", userStore.getUserId)
     .eq("quiz_id", 13);
   if (data.length === 0) {
     console.log("Empty data");
@@ -255,7 +255,7 @@ const submitSurvey = async () => {
       surveySubmitted.value = true;
     } else {
       console.log("Error", quizError);
-      console.log(courseStore.getCourseId, user.value.id, payload)
+      console.log(courseStore.getCourseId, userStore.getUserId, payload)
       surveySubmitted.value = true;
     }
   } else {

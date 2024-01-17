@@ -98,6 +98,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <Navbar></Navbar>
   <CourseSidebar>
     <div v-if="userStore.getAccountType=== 'instructor'">
       <h2 class="font-bold text-white text-3xl pb-2">Grade Dashboard</h2>

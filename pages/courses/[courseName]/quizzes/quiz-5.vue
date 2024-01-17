@@ -12,6 +12,7 @@ const courseStore = useCourseStore();
 //Get old url for reference later
 const router = useRouter();
 const basePath = router.currentRoute.value.fullPath.replace(/\/quiz-\d+$/, '');
+const userStore = useUserStore();
 
 
 const userScore = ref(0);
@@ -66,7 +67,7 @@ onMounted(async () => {
   const { data: studentData, error: studentError } = await client
     .from("grades")
     .select("*")
-    .eq("student_id", user.value.id)
+    .eq("student_id", userStore.getUserId)
     .eq("quiz_id", 7)
     .order("id", { ascending: false });
   if (studentError) {
@@ -183,7 +184,7 @@ async function submitStudentData() {
     .insert([
       {
         class_id: courseStore.getCourseId,
-        student_id: user.value.id,
+        student_id: userStore.getUserId,
         quiz_id: 8,
         score: userScore.value,
         attempt_count: attemptPayload,
