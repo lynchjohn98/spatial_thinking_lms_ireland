@@ -21,7 +21,7 @@ async function resetPassword() {
   if (data) {
     try {
       await client.auth.resetPasswordForEmail(credentials.email, {
-        redirectTo: "https://spatialthinking.netlify.app/update",
+        redirectTo: "https://spatialvis.netlify.app/update",
       });
       alert(
         "Email sent, please close this window and continue to the link provided in the email."
